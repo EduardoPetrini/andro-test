@@ -10,4 +10,8 @@
     <string name="confirm_password">Comfirmar senha</string>
     <string name="button_create_account">Criar conta</string>
     <string name="panel_top">Painel do topo</string>
+
+    <string name="title_activity_login">Entrar</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
