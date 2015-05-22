@@ -1,6 +1,13 @@
 <resources>
-    <string name="app_name">AndroTest</string>
+    <string name="app_name">MeLeva</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="head_cadastro">Cadastre-se</string>
+    <string name="complet_name">Nome completo</string>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="confirm_password">Comfirmar senha</string>
+    <string name="button_create_account">Criar conta</string>
+    <string name="panel_top">Painel do topo</string>
 </resources>
