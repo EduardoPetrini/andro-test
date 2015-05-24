@@ -12,6 +12,8 @@
     <string name="panel_top">Painel do topo</string>
 
     <string name="title_activity_login">Entrar</string>
+    <string name="button_entrar">Entrar</string>
+    <string name="textView_cadastrar">Cadastre-se</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

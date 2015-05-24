@@ -6,6 +6,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 /**
@@ -88,6 +94,36 @@ public class LoginActivity extends Activity {
                         Gravity.CENTER
                 )
         );
+
+        //final Button button_entrar=(Button) findViewById(R.id.butonLogin);
+        //button_entrar.setOnClickListener(button_entrar());
+    }
+
+    public void cadastrar(View view){
+
+        Intent intent= new Intent(this, HomeActivity.class);
+
+        startActivity(intent);
+
+    }
+
+    public void entrar(View view){
+        //Renomear Home Activity para CadastroActivity
+        //Intent intent= new Intent(this, HomeActivity.class);
+
+        //pega as informacoes da tela
+        EditText editTextUser=(EditText) findViewById(R.id.user_email);
+        String user=editTextUser.getText().toString();
+
+        EditText editTextPassword=(EditText) findViewById(R.id.user_password);
+        String password=editTextPassword.getText().toString();
+
+        //chama o web service para validar as info
+        //URL url= new URL("http://www.android.com/");
+        //HttpURLConnection;
+        //inicia a interface Home do Usuario
+        //startActivity(intent);
+
     }
 
 }

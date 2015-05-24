@@ -4,4 +4,8 @@
     <color name="blue_default">#3BBEFF</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <color name="White_default">#FFFFFF</color>
+
+    <color name="Black_default">#000000</color>
 </resources>

@@ -3,6 +3,7 @@ package br.com.androtest;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -54,6 +55,7 @@ public class HomeActivity extends Activity {
                 )
         );
 
+        Intent intent= getIntent();
 
     }
 
