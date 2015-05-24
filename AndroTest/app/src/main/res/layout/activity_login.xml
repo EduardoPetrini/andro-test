@@ -7,10 +7,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="#0099cc"
-    tools:context="br.com.androtest.LoginActivity"
+    tools:context=".LoginActivity"
     tools:ignore="MissingPrefix">
-    tools:context=".HomeActivity"
+
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -22,10 +21,10 @@
         android:layout_height="wrap_content"
         android:text="@string/email"
         android:gravity="center"
-        fontPath="comfortaa_regular.ttf"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"
+        fontPath="comfortaa_regular.ttf" />
 
     <EditText
         android:id="@+id/user_password"
@@ -33,32 +32,33 @@
         android:layout_height="wrap_content"
         android:text="@string/password"
         android:gravity="center"
-        fontPath="comfortaa_regular.ttf"
         android:password="true"
         android:layout_below="@+id/user_email"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"
+        fontPath="comfortaa_regular.ttf"/>
 
-    <TextView
+    <Button
+        android:id="@+id/buttonCadastrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/textView_cadastrar"
-        fontPath="confrontaa_regular.ttf"
-        android:layout_below="@+id/user_password"
-        android:layout_marginTop="40dp"
-        android:textColor="@color/White_default"
-        android:textSize="18dp"
-        android:onClick="cadastrar"/>
+        android:background="@color/gray_default"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/Black_default"
+        android:onClick="cadastrar"
+        fontPath="comfortaa_regular.ttf"/>
 
     <Button
         android:id="@+id/butonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_entrar"
-        fontPath="confrontaa_regular.ttf"
-        android:background="@color/White_default"
-        android:layout_alignParentBottom="true"
-        android:textColor="@color/Black_default"
-        android:onClick="entrar"/>
+        android:background="@color/blue_default"
+        android:textColor="@color/White_default"
+        android:onClick="entrar"
+        android:layout_marginBottom="10dp"
+        fontPath="comfortaa_regular.ttf"
+        android:layout_above="@id/buttonCadastrar"/>
 
 </RelativeLayout>
