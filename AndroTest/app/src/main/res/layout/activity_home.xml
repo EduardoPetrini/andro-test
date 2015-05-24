@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:text="@string/head_cadastro"
         android:textSize="20dp"
-        fontPath="comfortaa_regular.ttf"
-        android:textStyle="bold" />
+        android:textAppearance="@style/comforttaFont"
+        />
 
     <EditText
         android:id="@+id/inputNome"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/complet_name"
         android:layout_marginTop="30dp"
-        fontPath="comfortaa_regular.ttf"/>
+        android:textAppearance="@style/comforttaFont"/>
 
     <EditText
         android:id="@+id/inputEmail"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/email"
         android:layout_marginTop="90dp"
-        fontPath="comfortaa_regular.ttf"/>
+        android:textAppearance="@style/comforttaFont"/>
 
     <EditText
         android:id="@+id/inputSenha"
@@ -42,7 +42,7 @@
         android:hint="@string/password"
         android:layout_marginTop="150dp"
         android:password="true"
-        fontPath="comfortaa_regular.ttf"/>
+        android:textAppearance="@style/comforttaFont"/>
 
     <EditText
         android:id="@+id/inputConfSenha"
@@ -51,7 +51,7 @@
         android:hint="@string/confirm_password"
         android:layout_marginTop="210dp"
         android:password="true"
-        fontPath="comfortaa_regular.ttf"/>
+        android:textAppearance="@style/comforttaFont"/>
 
     <Button
         android:id="@+id/buttonCadastre"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/button_create_account"
-        fontPath="comfortaa_regular.ttf"
+        android:textAppearance="@style/comforttaFont"
         android:background="@color/blue_default"/>
 
 </RelativeLayout>

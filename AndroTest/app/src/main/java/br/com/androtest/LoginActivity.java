@@ -2,27 +2,21 @@ package br.com.androtest;
 
 import br.com.androtest.util.SystemUiHider;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 
 /**
@@ -43,13 +37,13 @@ public class LoginActivity extends Activity {
 
 //        Default font
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("comfortaa_regular.ttf")
+                        .setDefaultFontPath("fonts/comfortaa-regular.ttf")
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );
 
         SpannableString s = new SpannableString("");
-        s.setSpan(new TypefaceSpan("comfortaa_regular.ttf"), 0, s.length(),
+        s.setSpan(new TypefaceSpan("fonts/comfortaa-bold.ttf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // Update the action bar title with the TypefaceSpan instance
@@ -95,6 +89,11 @@ public class LoginActivity extends Activity {
         //inicia a interface Home do Usuario
         //startActivity(intent);
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

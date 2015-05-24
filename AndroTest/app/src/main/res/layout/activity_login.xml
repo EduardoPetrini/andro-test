@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="40dp"
-        fontPath="comfortaa_regular.ttf" />
+        android:textAppearance="@style/comforttaFont" />
 
     <EditText
         android:id="@+id/user_password"
@@ -36,7 +36,7 @@
         android:layout_below="@+id/user_email"
         android:layout_alignParentStart="true"
         android:layout_marginTop="40dp"
-        fontPath="comfortaa_regular.ttf"/>
+        android:textAppearance="@style/comforttaFont"/>
 
     <Button
         android:id="@+id/buttonCadastrar"
@@ -47,7 +47,7 @@
         android:layout_alignParentBottom="true"
         android:textColor="@color/Black_default"
         android:onClick="cadastrar"
-        fontPath="comfortaa_regular.ttf"/>
+        android:textAppearance="@style/comforttaFont"/>
 
     <Button
         android:id="@+id/butonLogin"
@@ -58,7 +58,7 @@
         android:textColor="@color/White_default"
         android:onClick="entrar"
         android:layout_marginBottom="10dp"
-        fontPath="comfortaa_regular.ttf"
+        android:textAppearance="@style/comforttaFont"
         android:layout_above="@id/buttonCadastrar"/>
 
 </RelativeLayout>

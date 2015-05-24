@@ -12,8 +12,6 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/app_name"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white"
-        fontPath="comfortaa_bold.ttf"
         android:textSize="30dp"/>
 </RelativeLayout>
