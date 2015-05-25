@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -54,6 +56,16 @@ public class CadastroActivity extends Activity {
         );
 
         Intent intent= getIntent();
+
+        //inserir opções no Spinner
+        Spinner spinner= (Spinner)findViewById(R.id.spinnerCargo);
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.cargo,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setPrompt("Selecione Seu Cargo");
+        spinner.setAdapter(adapter);
+
+        //pega a opção escolhida no Spinner (TESTAR)
+        String cargoSelecionado=spinner.getSelectedItem().toString();
 
     }
 

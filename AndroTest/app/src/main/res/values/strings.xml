@@ -16,4 +16,14 @@
     <string name="textView_cadastrar">Cadastre-se</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="cargo">Cargo:</string>
+    <string name="escolher_cargo">Escolha Seu Cargo</string>
+    <string-array name="cargo">
+        <item>Autorizador</item>
+        <item>Motorista</item>
+        <item>Solicitante</item>
+        <item>Transportador</item>
+    </string-array>
+
 </resources>

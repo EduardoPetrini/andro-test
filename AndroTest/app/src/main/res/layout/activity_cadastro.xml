@@ -7,15 +7,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".CadastroActivity"
-    tools:ignore="MissingPrefix">
+    tools:context=".CadastroActivity">
 
      <TextView
         android:id="@+id/headText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         android:text="@string/head_cadastro"
-        android:textSize="20dp"
         android:textAppearance="@style/comforttaFont"
         />
 
@@ -23,24 +23,56 @@
         android:id="@+id/inputNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/headText"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp"
         android:hint="@string/complet_name"
-        android:layout_marginTop="30dp"
         android:textAppearance="@style/comforttaFont"/>
 
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/inputNome"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp"
         android:hint="@string/email"
-        android:layout_marginTop="90dp"
         android:textAppearance="@style/comforttaFont"/>
+
+    <LinearLayout
+        android:id="@+id/linerLayoutCargo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal"
+        android:layout_below="@+id/inputEmail">
+
+        <TextView
+            android:id="@+id/textViewCargo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/cargo"
+            android:textAppearance="@style/comforttaFont"/>
+
+        <Spinner
+            android:id="@+id/spinnerCargo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/escolher_cargo"
+            android:textAppearance="@style/comforttaFont"/>
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/inputSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/linerLayoutCargo"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp"
         android:hint="@string/password"
-        android:layout_marginTop="150dp"
         android:password="true"
         android:textAppearance="@style/comforttaFont"/>
 
@@ -49,7 +81,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/confirm_password"
-        android:layout_marginTop="210dp"
+        android:layout_below="@+id/inputSenha"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp"
         android:password="true"
         android:textAppearance="@style/comforttaFont"/>
 
