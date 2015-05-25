@@ -66,7 +66,7 @@ public class LoginActivity extends Activity {
 
     public void cadastrar(View view){
 
-        Intent intent= new Intent(this, HomeActivity.class);
+        Intent intent= new Intent(this, CadastroActivity.class);
 
         startActivity(intent);
 
@@ -74,7 +74,7 @@ public class LoginActivity extends Activity {
 
     public void entrar(View view){
         //Renomear Home Activity para CadastroActivity
-        //Intent intent= new Intent(this, HomeActivity.class);
+        //Intent intent= new Intent(this, CadastroActivity.class);
 
         //pega as informacoes da tela
         EditText editTextUser=(EditText) findViewById(R.id.user_email);
