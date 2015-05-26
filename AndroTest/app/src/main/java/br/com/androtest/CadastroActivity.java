@@ -31,6 +31,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -75,6 +77,16 @@ public class CadastroActivity extends Activity {
 
         Intent intent= getIntent();
 
+        //inserir opções no Spinner
+        Spinner spinner= (Spinner)findViewById(R.id.spinnerCargo);
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.cargo,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setPrompt("Selecione Seu Cargo");
+        spinner.setAdapter(adapter);
+
+        //pega a opção escolhida no Spinner (TESTAR)
+        String cargoSelecionado=spinner.getSelectedItem().toString();
+
     }
 
     @Override
@@ -109,18 +121,15 @@ public class CadastroActivity extends Activity {
         EditText email = (EditText) findViewById(R.id.inputEmail);
         EditText senha = (EditText) findViewById(R.id.inputSenha);
         EditText confSenha = (EditText) findViewById(R.id.inputConfSenha);
+        Spinner spinner= (Spinner)findViewById(R.id.spinnerCargo);
 
 //        "{\"type\":\"example\"}";
 
-        if(validateFields(nome, email, senha, confSenha)) {
-            String json = "{\"nome\":\"" + nome.getText() + "\"," +
-                    "\"email\":\"" + email.getText() + "\"," +
-                    "\"senha\":\"" + senha.getText() + "\"}";
-
-            System.out.println(json);
+        if(validateFields(nome, email, spinner, senha, confSenha)) {
             try {
                 JSONObject dataObject = new JSONObject("{\"nome\":\"" + nome.getText() + "\"," +
                         "\"email\":\"" + email.getText() + "\"," +
+                        "\"cargo\":\""+spinner.getSelectedItem().toString()+"\","+
                         "\"senha\":\"" + senha.getText() + "\"}");
 
                 sendDataToServer(dataObject);
@@ -132,7 +141,7 @@ public class CadastroActivity extends Activity {
 
     }
 
-    private boolean validateFields(EditText nome, EditText email, EditText senha, EditText confSenha) {
+    private boolean validateFields(EditText nome, EditText email, Spinner spinner, EditText senha, EditText confSenha) {
 
         boolean success = true;
 
@@ -144,6 +153,12 @@ public class CadastroActivity extends Activity {
             success = false;
             email.setError("É necessário inserir um email");
         }
+
+        if(spinner.getSelectedItem().toString().trim().equals("Selecione seu cargo")){
+            success = false;
+            alertUser("Você deve selecionar um cargo!");
+        }
+
         if(senha.getText().toString().trim().equals("")){
             success = false;
             senha.setError("É necessário inserir uma senha");

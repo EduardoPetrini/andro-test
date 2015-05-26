@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">MeLeva</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="head_cadastro">Cadastre-se</string>
     <string name="complet_name">Nome completo</string>
@@ -16,4 +15,15 @@
     <string name="textView_cadastrar">Cadastre-se</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="cargo">Cargo:</string>
+    <string name="escolher_cargo">Escolha Seu Cargo</string>
+    <string-array name="cargo">
+        <item>Selecione seu cargo</item>
+        <item>Autorizador</item>
+        <item>Motorista</item>
+        <item>Solicitante</item>
+        <item>Transportador</item>
+    </string-array>
+
 </resources>
