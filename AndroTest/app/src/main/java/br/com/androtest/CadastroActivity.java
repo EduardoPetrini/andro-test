@@ -2,23 +2,43 @@ package br.com.androtest;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.test.AndroidTestCase;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class CadastroActivity extends Activity {
+
+//    private String url = "http://api.server.com/cadastrar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,5 +102,108 @@ public class CadastroActivity extends Activity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void submitData(View view){
+        EditText nome = (EditText) findViewById(R.id.inputNome);
+        EditText email = (EditText) findViewById(R.id.inputEmail);
+        EditText senha = (EditText) findViewById(R.id.inputSenha);
+        EditText confSenha = (EditText) findViewById(R.id.inputConfSenha);
+
+//        "{\"type\":\"example\"}";
+
+        if(validateFields(nome, email, senha, confSenha)) {
+            String json = "{\"nome\":\"" + nome.getText() + "\"," +
+                    "\"email\":\"" + email.getText() + "\"," +
+                    "\"senha\":\"" + senha.getText() + "\"}";
+
+            System.out.println(json);
+            try {
+                JSONObject dataObject = new JSONObject("{\"nome\":\"" + nome.getText() + "\"," +
+                        "\"email\":\"" + email.getText() + "\"," +
+                        "\"senha\":\"" + senha.getText() + "\"}");
+
+                sendDataToServer(dataObject);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private boolean validateFields(EditText nome, EditText email, EditText senha, EditText confSenha) {
+
+        boolean success = true;
+
+        if(nome.getText().toString().trim().equals("")){
+            success = false;
+            nome.setError("É necessário inserir um nome");
+        }
+        if(email.getText().toString().trim().equals("")){
+            success = false;
+            email.setError("É necessário inserir um email");
+        }
+        if(senha.getText().toString().trim().equals("")){
+            success = false;
+            senha.setError("É necessário inserir uma senha");
+        }
+        if(confSenha.getText().toString().trim().equals("")){
+            success = false;
+            confSenha.setError("É necessário inserir a confirmação da senha");
+        }
+
+        if(!confSenha.getText().toString().trim().equals(senha.getText().toString().trim())){
+            success = false;
+            confSenha.setText("");
+            confSenha.setError("Senha não confere!");
+        }
+
+        return success;
+    }
+
+    public void sendDataToServer(JSONObject dataObject){
+        String url = "http://jsonplaceholder.typicode.com/posts";
+        System.out.println("Enviando objeto para  "+url);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (url, dataObject, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                        mTxtDisplay.setText("Response: " + response.toString());
+//                        Get response and set
+                        System.out.println(response);
+                        System.out.println("Cadastro enviado com sucesso!");
+                        alertUser("Cadastro enviado com sucesso!");
+                        goToLoginScreen();
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub, print error message
+                        System.out.println("Erro ao enviar o cadastro: "+error.getMessage());
+                        alertUser("Erro ao enviar o cadastro: "+error.getMessage());
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
+        requestQueue.start();
+
+    }
+
+    public void goToLoginScreen(){
+        this.finish();
+    }
+
+    private void alertUser(String s) {
+        AlertDialog.Builder popupBuilder = new AlertDialog.Builder(this);
+        TextView myMsg = new TextView(this);
+        myMsg.setText(s);
+        myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+        popupBuilder.setView(myMsg);
+        popupBuilder.show();
+
     }
 }

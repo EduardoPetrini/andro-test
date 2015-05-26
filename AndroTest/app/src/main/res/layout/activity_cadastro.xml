@@ -60,6 +60,7 @@
         android:layout_alignParentBottom="true"
         android:text="@string/button_create_account"
         android:textAppearance="@style/comforttaFont"
-        android:background="@color/blue_default"/>
+        android:background="@color/blue_default"
+        android:onClick="submitData"/>
 
 </RelativeLayout>
