@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.lp3.Usuario;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +37,8 @@ import android.widget.Spinner;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import com.lp3.Usuario;
 
 
 public class CadastroActivity extends Activity {
@@ -77,15 +80,11 @@ public class CadastroActivity extends Activity {
 
         Intent intent= getIntent();
 
-        //inserir opções no Spinner
         Spinner spinner= (Spinner)findViewById(R.id.spinnerCargo);
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.cargo,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setPrompt("Selecione Seu Cargo");
         spinner.setAdapter(adapter);
-
-        //pega a opção escolhida no Spinner (TESTAR)
-        String cargoSelecionado=spinner.getSelectedItem().toString();
 
     }
 
@@ -117,15 +116,19 @@ public class CadastroActivity extends Activity {
     }
 
     public void submitData(View view){
+        Usuario usuario=new Usuario();
         EditText nome = (EditText) findViewById(R.id.inputNome);
+        usuario.setNome(nome.getText().toString());
         EditText email = (EditText) findViewById(R.id.inputEmail);
+        usuario.setEmail(email.getText().toString());
         EditText senha = (EditText) findViewById(R.id.inputSenha);
+        usuario.setSenha(senha.getText().toString());
         EditText confSenha = (EditText) findViewById(R.id.inputConfSenha);
         Spinner spinner= (Spinner)findViewById(R.id.spinnerCargo);
+        usuario.setCargo(spinner.getSelectedItem().toString());
+        //        "{\"type\":\"example\"}";
 
-//        "{\"type\":\"example\"}";
-
-        if(validateFields(nome, email, spinner, senha, confSenha)) {
+       /* if(validateFields(nome, email, spinner, senha, confSenha)) {
             try {
                 JSONObject dataObject = new JSONObject("{\"nome\":\"" + nome.getText() + "\"," +
                         "\"email\":\"" + email.getText() + "\"," +
@@ -137,8 +140,11 @@ public class CadastroActivity extends Activity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
+        Intent intent= new Intent(this,HomeActivity.class);
+        intent.putExtra("usuarioParcelable",usuario);
+        startActivity(intent);
     }
 
     private boolean validateFields(EditText nome, EditText email, Spinner spinner, EditText senha, EditText confSenha) {

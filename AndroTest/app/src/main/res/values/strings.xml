@@ -26,4 +26,10 @@
         <item>Transportador</item>
     </string-array>
 
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_item_list_view">itemListView</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_item_lista">itemLista</string>
+
 </resources>

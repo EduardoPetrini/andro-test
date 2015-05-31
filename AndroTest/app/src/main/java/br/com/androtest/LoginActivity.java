@@ -60,8 +60,6 @@ public class LoginActivity extends Activity {
                 )
         );
 
-        //final Button button_entrar=(Button) findViewById(R.id.butonLogin);
-        //button_entrar.setOnClickListener(button_entrar());
     }
 
     public void cadastrar(View view){
@@ -73,7 +71,6 @@ public class LoginActivity extends Activity {
     }
 
     public void entrar(View view){
-        //Renomear Home Activity para CadastroActivity
         //Intent intent= new Intent(this, CadastroActivity.class);
 
         //pega as informacoes da tela

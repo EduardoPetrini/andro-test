@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+    <resources>
 
-    <color name="blue_default">#3BBEFF</color>
+        <color name="blue_default">#3BBEFF</color>
 
-    <color name="black_overlay">#66000000</color>
+        <color name="black_overlay">#66000000</color>
 
-    <color name="White_default">#FFFFFF</color>
+        <color name="White_default">#FFFFFF</color>
 
-    <color name="Black_default">#000000</color>
-    <color name="gray_default">#DBDBDB</color>
+        <color name="Black_default">#000000</color>
+
+        <color name="gray_default">#DBDBDB</color>
+
+        <color name="green_default">#00FF00</color>
+
+        <color name="read_default">#FF0000</color>
+
 </resources>
