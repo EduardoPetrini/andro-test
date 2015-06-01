@@ -3,59 +3,28 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradiente">
 
-    <LinearLayout
-        android:id="@+id/linerLayoutItemSuperior"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewTarefa"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentStart="true"
+        android:layout_gravity="start"
+        android:textSize="16sp"
+        android:textColor="@color/Black_default"
+        android:text="Orçar"
+        android:textAppearance="@style/comforttaFont"/>
 
-        <TextView
-            android:id="@+id/textViewTitulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:textSize="20sp"
-            android:textAppearance="@style/comforttaFont"/>
-
-        <TextView
-            android:id="@+id/textViewData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textAppearance="@style/comforttaFont"
-            android:textColor="@color/green_default"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linerLayoutItemInferior"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewTitulo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/linerLayoutItemSuperior">
-
-        <TextView
-            android:id="@+id/textViewNotificacoes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:text="12"
-            android:layout_gravity="start"
-            android:textAppearance="@style/comforttaFont"/>
-
-        <TextView
-            android:id="@+id/textViewStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:text="Status"
-            android:layout_gravity="end"
-            android:textAppearance="@style/comforttaFont"/>
-
-    </LinearLayout>
-
+        android:layout_below="@+id/textViewTarefa"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        android:text="Viagem BH"
+        android:textAppearance="@style/comforttaFont"/>
 
 </RelativeLayout>

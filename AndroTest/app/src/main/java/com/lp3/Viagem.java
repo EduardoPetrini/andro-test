@@ -8,9 +8,8 @@ import java.util.Date;
 public class Viagem {
 
     private int id, quantidadePessoas;
-    private String tituloViagem,cidadeOrigem,cidadeDestino;
+    private String tituloViagem,cidadeOrigem,cidadeDestino,dataPartida,dataChegada;
     private double custoOrcado,custoReal;
-    private Date dataPartida,dataChegada;
 
 
     public void setId(int id) {
@@ -41,11 +40,11 @@ public class Viagem {
         this.custoReal = custo_real;
     }
 
-    public void setDataPartida(Date data_partida) {
+    public void setDataPartida(String data_partida) {
         this.dataPartida = data_partida;
     }
 
-    public void setDataChegada(Date data_chegada) {
+    public void setDataChegada(String data_chegada) {
         this.dataChegada = data_chegada;
     }
 
@@ -78,11 +77,11 @@ public class Viagem {
         return custoReal;
     }
 
-    public Date getDataPartida() {
+    public String getDataPartida() {
         return dataPartida;
     }
 
-    public Date getDataChegada() {
+    public String getDataChegada() {
         return dataChegada;
     }
 

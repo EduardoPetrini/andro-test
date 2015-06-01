@@ -10,7 +10,7 @@
     tools:context=".LoginActivity">
 
     <EditText
-        android:id="@+id/user_email"
+        android:id="@+id/usuario_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/email"
@@ -21,13 +21,13 @@
         android:textAppearance="@style/comforttaFont" />
 
     <EditText
-        android:id="@+id/user_password"
+        android:id="@+id/usuario_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/password"
         android:gravity="center"
         android:password="true"
-        android:layout_below="@+id/user_email"
+        android:layout_below="@+id/usuario_email"
         android:layout_alignParentStart="true"
         android:layout_marginTop="40dp"
         android:textAppearance="@style/comforttaFont"/>
@@ -44,7 +44,7 @@
         android:textAppearance="@style/comforttaFont"/>
 
     <Button
-        android:id="@+id/butonLogin"
+        android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_entrar"

@@ -54,21 +54,35 @@ public class HomeActivity extends Activity {
         //obter lista de viagens do usuário futuramente pelo webservice
         Viagem viagem1=new Viagem();
         Viagem viagem2=new Viagem();
+        Viagem viagem3=new Viagem();
+        Viagem viagem4=new Viagem();
+        Viagem viagem5=new Viagem();
 
-        Date data=new Date();
         viagem1.setTituloViagem("Festa");
-        viagem1.setDataPartida(data);
+        viagem1.setDataPartida("30/05/2015");
         viagem1.setCidadeDestino("Bom Sucesso");
         viagem2.setTituloViagem("Excursão");
-        viagem2.setDataPartida(data);
+        viagem2.setDataPartida("30/05/2015");
         viagem2.setCidadeDestino("Belo Horizonte");
+        viagem3.setTituloViagem("Excursão");
+        viagem3.setDataPartida("30/05/2015");
+        viagem3.setCidadeDestino("Belo Horizonte");
+        viagem4.setTituloViagem("Excursão");
+        viagem4.setDataPartida("30/05/2015");
+        viagem4.setCidadeDestino("Belo Horizonte");
+        viagem5.setTituloViagem("Excursão");
+        viagem5.setDataPartida("30/05/2015");
+        viagem5.setCidadeDestino("Belo Horizonte");
 
         ArrayList<Viagem> listaViagens=new ArrayList<Viagem>();
         listaViagens.add(viagem1);
         listaViagens.add(viagem2);
+        listaViagens.add(viagem3);
+        listaViagens.add(viagem4);
+        listaViagens.add(viagem5);
+
 
         //Popula ListView
-
         ListAdapter adapter = new AdapterListView(this,listaViagens);
 
         mainListView= (ListView) findViewById(R.id.viagensListView);

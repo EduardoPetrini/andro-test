@@ -15,4 +15,6 @@
 
         <color name="read_default">#FF0000</color>
 
+        <color name="gray_new">#C7C7C7</color>
+
 </resources>
