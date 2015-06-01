@@ -3,17 +3,13 @@ package br.com.androtest;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.test.AndroidTestCase;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +18,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,15 +30,15 @@ import org.json.JSONObject;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import br.com.androtest.util.AndroidUtils;
+import br.com.androtest.util.RestUrls;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import com.lp3.Usuario;
 
 
 public class CadastroActivity extends Activity {
 
-//    private String url = "http://api.server.com/cadastrar";
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,23 +123,24 @@ public class CadastroActivity extends Activity {
         usuario.setCargo(spinner.getSelectedItem().toString());
         //        "{\"type\":\"example\"}";
 
-       /* if(validateFields(nome, email, spinner, senha, confSenha)) {
+        if(validateFields(nome, email, spinner, senha, confSenha)) {
             try {
-                JSONObject dataObject = new JSONObject("{\"nome\":\"" + nome.getText() + "\"," +
-                        "\"email\":\"" + email.getText() + "\"," +
-                        "\"cargo\":\""+spinner.getSelectedItem().toString()+"\","+
-                        "\"senha\":\"" + senha.getText() + "\"}");
+
+                JSONObject dataObject = new JSONObject();
+
+                dataObject.put("nome", nome.getText());
+                dataObject.put("email", email.getText());
+                dataObject.put("cargo", spinner.getSelectedItem().toString());
+                dataObject.put("senha", senha.getText());
 
                 sendDataToServer(dataObject);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
 
-        Intent intent= new Intent(this,HomeActivity.class);
-        intent.putExtra("usuarioParcelable",usuario);
-        startActivity(intent);
+
     }
 
     private boolean validateFields(EditText nome, EditText email, Spinner spinner, EditText senha, EditText confSenha) {
@@ -162,7 +158,7 @@ public class CadastroActivity extends Activity {
 
         if(spinner.getSelectedItem().toString().trim().equals("Selecione seu cargo")){
             success = false;
-            alertUser("Você deve selecionar um cargo!");
+            AndroidUtils.alertUser("Você deve selecionar um cargo!", this);
         }
 
         if(senha.getText().toString().trim().equals("")){
@@ -184,18 +180,31 @@ public class CadastroActivity extends Activity {
     }
 
     public void sendDataToServer(JSONObject dataObject){
-        String url = "http://jsonplaceholder.typicode.com/posts";
-        System.out.println("Enviando objeto para  "+url);
+        String url = RestUrls.host+RestUrls.usuarioCadastrar;
+        System.out.println("Enviando objeto para  " + url);
+        final Activity currentActivity = this;
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (url, dataObject, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-//                        mTxtDisplay.setText("Response: " + response.toString());
-//                        Get response and set
+                        AndroidUtils.alertUser("Cadastro enviado com sucesso!", currentActivity);
                         System.out.println(response);
+
+                        try{
+                            usuario = new Usuario();
+                            JSONObject userResponse = response.getJSONObject("usuario");
+                            usuario.setNome(userResponse.getString("nome"));
+                            usuario.setEmail(userResponse.getString("email"));
+                            usuario.setCargo(userResponse.getString("cargo"));
+
+                            goToHome();
+
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                        }
                         System.out.println("Cadastro enviado com sucesso!");
-                        alertUser("Cadastro enviado com sucesso!");
+
                         goToLoginScreen();
 
                     }
@@ -205,9 +214,10 @@ public class CadastroActivity extends Activity {
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub, print error message
                         System.out.println("Erro ao enviar o cadastro: "+error.getMessage());
-                        alertUser("Erro ao enviar o cadastro: "+error.getMessage());
+                        AndroidUtils.alertUser("Erro ao enviar o cadastro: " + error.getMessage(), currentActivity);
                     }
                 });
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsObjRequest);
         requestQueue.start();
@@ -218,13 +228,9 @@ public class CadastroActivity extends Activity {
         this.finish();
     }
 
-    private void alertUser(String s) {
-        AlertDialog.Builder popupBuilder = new AlertDialog.Builder(this);
-        TextView myMsg = new TextView(this);
-        myMsg.setText(s);
-        myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
-        popupBuilder.setView(myMsg);
-        popupBuilder.show();
-
+    private void goToHome(){
+        Intent intent= new Intent(this,HomeActivity.class);
+        intent.putExtra("usuarioParcelable", usuario);
+        startActivity(intent);
     }
 }

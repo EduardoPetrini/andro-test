@@ -1,12 +1,13 @@
 package br.com.androtest;
 
+import br.com.androtest.util.AndroidUtils;
+import br.com.androtest.util.RestUrls;
 import br.com.androtest.util.SystemUiHider;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,6 +38,8 @@ import org.json.JSONObject;
  * @see SystemUiHider
  */
 public class LoginActivity extends Activity {
+
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,92 +85,25 @@ public class LoginActivity extends Activity {
     }
 
     public void entrar(View view){
-        Usuario usuario= new Usuario();
+        //Intent intent= new Intent(this, CadastroActivity.class);
 
-        EditText editTextusuario=(EditText) findViewById(R.id.usuario_email);
-        EditText editTextpassword=(EditText) findViewById(R.id.usuario_password);
+        //pega as informacoes da tela
+        System.out.println("Logando no sistema...");
+        EditText emailField = (EditText)findViewById(R.id.usuario_email);
+        EditText senhaField = (EditText)findViewById(R.id.usuario_password);
 
-         if(validateFields(editTextusuario,editTextpassword)) {
+        if(validateFields(emailField,senhaField)) {
+
+            JSONObject dataObject = new JSONObject();
             try {
-                JSONObject dataObject = new JSONObject("{\"nome\":\"" + editTextusuario.getText() + "\"," +
-                        "\"senha\":\"" + editTextpassword.getText() + "\"}");
-
-                sendDataToServer(dataObject);
-
+                dataObject.put("email", emailField.getText().toString());
+                dataObject.put("senha", senhaField.getText().toString());
+                System.out.println(dataObject);
+                sendLoginToServer(dataObject);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
-        //ALTERARRRR   receber resposta do Web Service e passar o usuário para a HomeActivity
-        usuario.setNome(editTextusuario.getText().toString());
-        usuario.setSenha(editTextpassword.getText().toString());
-        usuario.setCargo("Solicitante");
-
-        Intent intent= new Intent(this,HomeActivity.class);
-        intent.putExtra("usuarioParcelable",usuario);
-        startActivity(intent);
-
-    }
-
-    private boolean validateFields(EditText usuario, EditText passward) {
-
-        boolean success = true;
-
-        if(usuario.getText().toString().trim().equals("")){
-            success = false;
-            usuario.setError("É necessário inserir um nome");
-        }
-        if(passward.getText().toString().trim().equals("")){
-            success = false;
-            passward.setError("É necessário inserir um email");
-        }
-        return success;
-    }
-
-    public void sendDataToServer(JSONObject dataObject){
-        String url = "http://jsonplaceholder.typicode.com/posts";
-        System.out.println("Enviando objeto para  "+url);
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (url, dataObject, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-//                        mTxtDisplay.setText("Response: " + response.toString());
-//                        Get response and set
-                        System.out.println(response);
-                        System.out.println("Cadastro enviado com sucesso!");
-                        alertUser("Cadastro enviado com sucesso!");
-                        goToHomeScrem();
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub, print error message
-                        System.out.println("Erro ao logaenviar o cadastro: "+error.getMessage());
-                        alertUser("Erro ao realizar login: "+error.getMessage());
-                    }
-                });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsObjRequest);
-        requestQueue.start();
-
-    }
-
-    private void alertUser(String s) {
-        AlertDialog.Builder popupBuilder = new AlertDialog.Builder(this);
-        TextView myMsg = new TextView(this);
-        myMsg.setText(s);
-        myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
-        popupBuilder.setView(myMsg);
-        popupBuilder.show();
-
-    }
-
-    public void goToHomeScrem(){
-        this.finish();
     }
 
     @Override
@@ -176,4 +111,66 @@ public class LoginActivity extends Activity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    public boolean validateFields(EditText emailField, EditText senhaField){
+        boolean success = true;
+        if(emailField.getText().toString().trim().equals("")){
+            success = false;
+            emailField.setError("É necessário inserir um email");
+        }
+        if(senhaField.getText().toString().trim().equals("")){
+            success = false;
+            senhaField.setError("É necessário inserir uma senha");
+        }
+
+        return success;
+    }
+
+    public void sendLoginToServer(JSONObject dataObject){
+        String url = RestUrls.host+RestUrls.login;
+        final Activity currentActivity = this;
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (url, dataObject, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        System.out.println(response);
+
+                        try{
+                            if(response.isNull("erro")){
+                                JSONObject userResponse = response.getJSONObject("usuario");
+                                usuario = new Usuario();
+                                usuario.setNome(userResponse.getString("nome"));
+                                usuario.setEmail(userResponse.getString("email"));
+                                usuario.setCargo(userResponse.getString("cargo"));
+
+                                goToHome();
+
+                            }else{
+                                AndroidUtils.alertUser("Erro ao logar: "+response.getString("erro"), currentActivity);
+                            }
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub, print error message
+                        System.out.println("Erro ao logar: "+error.getMessage());
+                        AndroidUtils.alertUser("Erro ao logar: "+error.getMessage(), currentActivity);
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
+        requestQueue.start();
+    }
+
+    private void goToHome(){
+        Intent intent= new Intent(this,HomeActivity.class);
+        intent.putExtra("usuarioParcelable", usuario);
+        startActivity(intent);
+    }
 }

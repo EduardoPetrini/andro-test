@@ -1,15 +1,11 @@
 package br.com.androtest;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -58,19 +54,19 @@ public class HomeActivity extends Activity {
         Viagem viagem4=new Viagem();
         Viagem viagem5=new Viagem();
 
-        viagem1.setTituloViagem("Festa");
+        viagem1.setTitulo("Festa");
         viagem1.setDataPartida("30/05/2015");
         viagem1.setCidadeDestino("Bom Sucesso");
-        viagem2.setTituloViagem("Excursão");
+        viagem2.setTitulo("Excursão");
         viagem2.setDataPartida("30/05/2015");
         viagem2.setCidadeDestino("Belo Horizonte");
-        viagem3.setTituloViagem("Excursão");
+        viagem3.setTitulo("Excursão");
         viagem3.setDataPartida("30/05/2015");
         viagem3.setCidadeDestino("Belo Horizonte");
-        viagem4.setTituloViagem("Excursão");
+        viagem4.setTitulo("Excursão");
         viagem4.setDataPartida("30/05/2015");
         viagem4.setCidadeDestino("Belo Horizonte");
-        viagem5.setTituloViagem("Excursão");
+        viagem5.setTitulo("Excursão");
         viagem5.setDataPartida("30/05/2015");
         viagem5.setCidadeDestino("Belo Horizonte");
 
