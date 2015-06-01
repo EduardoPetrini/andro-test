@@ -7,8 +7,8 @@ import java.util.Date;
  */
 public class Viagem {
 
-    private int id, quantidadePessoas;
-    private String tituloViagem,cidadeOrigem,cidadeDestino;
+    private int id, qtdePessoas;
+    private String titulo,status,cidadeOrigem,cidadeDestino;
     private double custoOrcado,custoReal;
     private Date dataPartida,dataChegada;
 
@@ -17,12 +17,12 @@ public class Viagem {
         this.id = id;
     }
 
-    public void setQuantidadePessoas(int quantidade_pessoas) {
-        this.quantidadePessoas = quantidade_pessoas;
+    public void setQtdePessoas(int quantidade_pessoas) {
+        this.qtdePessoas = quantidade_pessoas;
     }
 
-    public void setTituloViagem(String titulo_viagem) {
-        this.tituloViagem = titulo_viagem;
+    public void setTitulo(String titulo_viagem) {
+        this.titulo = titulo_viagem;
     }
 
     public void setCidadeOrigem(String cidade_origem) {
@@ -54,12 +54,12 @@ public class Viagem {
         return id;
     }
 
-    public int getQuantidadePessoas() {
-        return quantidadePessoas;
+    public int getQtdePessoas() {
+        return qtdePessoas;
     }
 
-    public String getTituloViagem() {
-        return tituloViagem;
+    public String getTitulo() {
+        return titulo;
     }
 
     public String getCidadeOrigem() {
@@ -86,4 +86,11 @@ public class Viagem {
         return dataChegada;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
