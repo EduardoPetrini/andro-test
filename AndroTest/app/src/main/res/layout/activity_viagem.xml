@@ -1,0 +1,143 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="br.com.androtest.ViagemActivity">
+
+    <TextView
+        android:id="@+id/headText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/head_cadastrar_viagem"
+        android:textAppearance="@style/comforttaFont"/>
+
+    <EditText
+        android:id="@+id/inputTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headText"
+        android:hint="@string/viagem_titulo"
+        android:textAppearance="@style/comforttaFont"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/headDataPartida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/head_data_partida"
+        android:textAppearance="@style/comforttaFont"
+        android:layout_below="@+id/inputTitulo"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/layoutDataPartida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/headDataPartida">
+
+        <EditText
+            android:id="@+id/dataPartida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/data"
+            android:inputType="date"
+            android:textAppearance="@style/comforttaFont"/>
+        <EditText
+            android:id="@+id/horaPartida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hora"
+            android:inputType="datetime"
+            android:textAppearance="@style/comforttaFont"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/headDataChegada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/head_data_chegada"
+        android:textAppearance="@style/comforttaFont"
+        android:layout_below="@+id/layoutDataPartida"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/layoutDataChegada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/headDataChegada">
+
+        <EditText
+            android:id="@+id/dataChegada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/data"
+            android:inputType="date"
+            android:textAppearance="@style/comforttaFont"/>
+        <EditText
+            android:id="@+id/horaChegada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hora"
+            android:inputType="datetime"
+            android:textAppearance="@style/comforttaFont"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/origem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/origem"
+        android:layout_below="@+id/layoutDataChegada"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/comforttaFont"/>
+
+    <EditText
+        android:id="@+id/destino"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/destino"
+        android:layout_below="@+id/origem"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/comforttaFont"/>
+
+    <LinearLayout
+        android:id="@+id/layoutQtde"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/destino"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/HeadqtdePessoas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/qtde_pessoas"
+            android:textAppearance="@style/comforttaFont"/>
+
+        <EditText
+            android:id="@+id/qtdePessoas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textAppearance="@style/comforttaFont"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/criar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/button_create_viagem"
+        android:textAppearance="@style/comforttaFont"
+        android:background="@color/blue_default"
+        android:onClick="criar"/>
+
+
+</RelativeLayout>

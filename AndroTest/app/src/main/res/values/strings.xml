@@ -31,5 +31,17 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_item_lista">itemLista</string>
+    <string name="title_activity_viagem">ViagemActivity</string>
+
+    <string name="head_cadastrar_viagem">Cadastrar viagem:</string>
+    <string name="viagem_titulo">Título</string>
+    <string name="head_data_partida">Data de partida</string>
+    <string name="head_data_chegada">Data de partida</string>
+    <string name="data">dd/mm/aaaa</string>
+    <string name="hora">hh:mm</string>
+    <string name="origem">Origem</string>
+    <string name="destino">Destino</string>
+    <string name="qtde_pessoas">Quantidade de pessoas</string>
+    <string name="button_create_viagem">Criar</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package br.com.androtest;
 
+import br.com.androtest.util.AndroidUtils;
+import br.com.androtest.util.RestUrls;
 import br.com.androtest.util.SystemUiHider;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -18,6 +20,16 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.lp3.Usuario;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -26,6 +38,8 @@ import android.widget.EditText;
  * @see SystemUiHider
  */
 public class LoginActivity extends Activity {
+
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +88,22 @@ public class LoginActivity extends Activity {
         //Intent intent= new Intent(this, CadastroActivity.class);
 
         //pega as informacoes da tela
-        EditText editTextUser=(EditText) findViewById(R.id.user_email);
-        String user=editTextUser.getText().toString();
+        System.out.println("Logando no sistema...");
+        EditText emailField = (EditText)findViewById(R.id.user_email);
+        EditText senhaField = (EditText)findViewById(R.id.user_password);
 
-        EditText editTextPassword=(EditText) findViewById(R.id.user_password);
-        String password=editTextPassword.getText().toString();
+        if(validateFields(emailField,senhaField)) {
 
-        //chama o web service para validar as info
-        //URL url= new URL("http://www.android.com/");
-        //HttpURLConnection;
-        //inicia a interface Home do Usuario
-        //startActivity(intent);
-
+            JSONObject dataObject = new JSONObject();
+            try {
+                dataObject.put("email", emailField.getText().toString());
+                dataObject.put("senha", senhaField.getText().toString());
+                System.out.println(dataObject);
+                sendLoginToServer(dataObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -93,4 +111,66 @@ public class LoginActivity extends Activity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    public boolean validateFields(EditText emailField, EditText senhaField){
+        boolean success = true;
+        if(emailField.getText().toString().trim().equals("")){
+            success = false;
+            emailField.setError("É necessário inserir um email");
+        }
+        if(senhaField.getText().toString().trim().equals("")){
+            success = false;
+            senhaField.setError("É necessário inserir uma senha");
+        }
+
+        return success;
+    }
+
+    public void sendLoginToServer(JSONObject dataObject){
+        String url = RestUrls.host+RestUrls.login;
+        final Activity currentActivity = this;
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (url, dataObject, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        System.out.println(response);
+
+                        try{
+                            if(response.isNull("erro")){
+                                JSONObject userResponse = response.getJSONObject("usuario");
+                                usuario = new Usuario();
+                                usuario.setNome(userResponse.getString("nome"));
+                                usuario.setEmail(userResponse.getString("email"));
+                                usuario.setCargo(userResponse.getString("cargo"));
+
+                                goToHome();
+
+                            }else{
+                                AndroidUtils.alertUser("Erro ao logar: "+response.getString("erro"), currentActivity);
+                            }
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub, print error message
+                        System.out.println("Erro ao logar: "+error.getMessage());
+                        AndroidUtils.alertUser("Erro ao logar: "+error.getMessage(), currentActivity);
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
+        requestQueue.start();
+    }
+
+    private void goToHome(){
+        Intent intent= new Intent(this,HomeActivity.class);
+        intent.putExtra("usuarioParcelable", usuario);
+        startActivity(intent);
+    }
 }
