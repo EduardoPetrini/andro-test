@@ -58,7 +58,8 @@
         android:layout_below="@+id/cargoUsuario"
         android:layout_above="@+id/buttonAddTarefa"
         android:layout_marginTop="-4dp"
-        android:layout_marginBottom="-4dp">
+        android:layout_marginBottom="-4dp"
+        android:onClick="verTarefa">
 
     </ListView>
 

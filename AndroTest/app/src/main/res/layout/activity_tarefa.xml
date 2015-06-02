@@ -1,0 +1,209 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="br.com.androtest.TarefaActivity">
+
+    <TextView
+        android:id="@+id/textViewTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:text="Titulo"
+        android:textSize="20dp"
+        android:textAppearance="@style/comforttaFont"
+        android:textColor="@color/Black_default"/>
+
+    <TextView
+        android:id="@+id/setTituloNaView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTitulo"
+        android:text="Viagem"
+        android:textAppearance="@style/comforttaFont"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textViewDatasAtividade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setTituloNaView"
+        android:text="Datas da Atividade"
+        android:textAppearance="@style/comforttaFont"
+        android:textColor="@color/Black_default"
+        android:textSize="20dp"
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/linerLayoutDatas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewDatasAtividade"
+        android:layout_centerHorizontal="true">
+
+    <TextView
+        android:id="@+id/textViewDataPartida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewDatasAtividade"
+        android:text="27/01/1992"
+        android:textAppearance="@style/comforttaFont"/>
+
+        <TextView
+            android:id="@+id/textViewA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewDatasAtividade"
+            android:layout_marginLeft="5dp"
+            android:text="A"
+            android:textColor="@color/Black_default"
+            android:textAppearance="@style/comforttaFont"/>
+
+    <TextView
+        android:id="@+id/textViewDataRetorno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textViewDataPartida"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/textViewDatasAtividade"
+        android:text="27/12/2015"
+        android:textAppearance="@style/comforttaFont" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewCidades"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linerLayoutDatas"
+        android:layout_marginTop="5dp"
+        android:textSize="20dp"
+        android:text="Cidade Origem/Destino"
+        android:textAppearance="@style/comforttaFont"/>
+
+    <LinearLayout
+        android:id="@+id/linerLayoutCidades"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewCidades"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/textViewSetCidadeOrigen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lavras"
+            android:textAppearance="@style/comforttaFont"/>
+
+        <TextView
+            android:id="@+id/textViewBarra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="/"
+            android:textColor="@color/Black_default"
+            android:textAppearance="@style/comforttaFont"/>
+
+        <TextView
+            android:id="@+id/textViewSetCidadeDestino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewDataPartida"
+            android:layout_marginLeft="5dp"
+            android:text="Belo Horizonte"
+            android:textAppearance="@style/comforttaFont" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linerLayoutQuantPessoas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linerLayoutCidades"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/textViewQuantPessoas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantidade de pessoas:"
+            android:textSize="20dp"
+            android:textAppearance="@style/comforttaFont"/>
+
+        <TextView
+            android:id="@+id/textViewSetQuantPessoas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewQuantPessoas"
+            android:layout_marginLeft="5dp"
+            android:text="10"
+            android:textAppearance="@style/comforttaFont" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linerLayoutCustoOrc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linerLayoutQuantPessoas"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/textViewCustoOrc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Custo Orçado:"
+            android:textSize="20dp"
+            android:textAppearance="@style/comforttaFont"/>
+
+        <TextView
+            android:id="@+id/textViewSetCustoOrc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewCustoOrc"
+            android:layout_marginLeft="5dp"
+            android:text="600"
+            android:textAppearance="@style/comforttaFont" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linerLayoutCustoReal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linerLayoutCustoOrc"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/textViewCustoReal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Custo Real:"
+            android:textSize="20dp"
+            android:textAppearance="@style/comforttaFont"/>
+
+        <TextView
+            android:id="@+id/textViewSetCustoReal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="5dp"
+            android:text="1000"
+            android:textAppearance="@style/comforttaFont" />
+
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinnerMotorista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/motoristas"
+        android:textAppearance="@style/comforttaFont"/>
+
+</RelativeLayout>

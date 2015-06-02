@@ -25,8 +25,6 @@ public class Usuario implements Parcelable{
         readFromParel(in);
     }
 
-    public Usuario (){}
-
     private void readFromParel(Parcel in) {
         nome=in.readString();
         cargo=in.readString();

@@ -48,7 +48,8 @@ public class HomeActivity extends Activity {
         cargoUsuario.setText(usuario.getCargo());
 
         //obter lista de viagens do usuário futuramente pelo webservice
-        Viagem viagem1=new Viagem();
+
+       /* Viagem viagem1=new Viagem();
         Viagem viagem2=new Viagem();
         Viagem viagem3=new Viagem();
         Viagem viagem4=new Viagem();
@@ -68,14 +69,14 @@ public class HomeActivity extends Activity {
         viagem4.setCidadeDestino("Belo Horizonte");
         viagem5.setTitulo("Excursão");
         viagem5.setDataPartida("30/05/2015");
-        viagem5.setCidadeDestino("Belo Horizonte");
+        viagem5.setCidadeDestino("Belo Horizonte");*/
 
         ArrayList<Viagem> listaViagens=new ArrayList<Viagem>();
-        listaViagens.add(viagem1);
-        listaViagens.add(viagem2);
-        listaViagens.add(viagem3);
-        listaViagens.add(viagem4);
-        listaViagens.add(viagem5);
+       // listaViagens.add(viagem1);
+        //listaViagens.add(viagem2);
+        //listaViagens.add(viagem3);
+        //listaViagens.add(viagem4);
+        //listaViagens.add(viagem5);
 
 
         //Popula ListView
@@ -83,6 +84,11 @@ public class HomeActivity extends Activity {
 
         mainListView= (ListView) findViewById(R.id.viagensListView);
         mainListView.setAdapter(adapter);
+
+    }
+
+    //reencaminha o usuário para a tarefa clicada
+    public void verTarefa(){
 
     }
 

@@ -43,5 +43,14 @@
     <string name="destino">Destino</string>
     <string name="qtde_pessoas">Quantidade de pessoas</string>
     <string name="button_create_viagem">Criar</string>
+    <string name="title_activity_tarefa">Tarefa</string>
+
+    <string-array name="motoristas">
+        <item>Selecione seu motorista</item>
+        <item>Godofredo</item>
+        <item>Aristildes</item>
+        <item>Aricreuza</item>
+        <item>Gilbertino</item>
+    </string-array>
 
 </resources>
