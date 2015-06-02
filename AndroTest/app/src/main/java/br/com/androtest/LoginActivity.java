@@ -141,6 +141,7 @@ public class LoginActivity extends Activity {
                                 JSONObject userResponse = response.getJSONObject("usuario");
                                 usuario = new Usuario();
                                 usuario.setNome(userResponse.getString("nome"));
+                                usuario.setId(userResponse.getInt("id"));
                                 usuario.setEmail(userResponse.getString("email"));
                                 usuario.setCargo(userResponse.getString("cargo"));
 

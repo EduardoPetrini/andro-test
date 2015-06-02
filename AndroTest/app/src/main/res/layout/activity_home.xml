@@ -71,6 +71,7 @@
         android:layout_marginTop="5dp"
         android:background="@mipmap/ic_add"
         android:maxHeight="72dp"
-        android:maxWidth="72dp"/>
+        android:maxWidth="72dp"
+        android:onClick="novaViagem"/>
 
 </RelativeLayout>

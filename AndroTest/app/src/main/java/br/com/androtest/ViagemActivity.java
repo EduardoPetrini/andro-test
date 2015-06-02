@@ -10,22 +10,43 @@ import android.text.style.TypefaceSpan;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.lp3.Usuario;
+import com.lp3.Viagem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import br.com.androtest.util.AndroidUtils;
+import br.com.androtest.util.RestUrls;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 public class ViagemActivity extends Activity {
+
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_viagem);
+
+        usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
+        System.out.println("Na tela de cadastro de viagem");
+        usuario.print();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/comfortaa-regular.ttf")
@@ -50,6 +71,75 @@ public class ViagemActivity extends Activity {
                         Gravity.CENTER
                 )
         );
+    }
+
+    public void criar(View view){
+        EditText titulo = (EditText)findViewById(R.id.inputTitulo);
+        EditText dataPartida = (EditText)findViewById(R.id.dataPartida);
+        EditText horaPartida = (EditText)findViewById(R.id.horaPartida);
+        EditText dataChegada = (EditText)findViewById(R.id.dataChegada);
+        EditText horaChegada = (EditText)findViewById(R.id.horaChegada);
+        EditText origem = (EditText)findViewById(R.id.origem);
+        EditText destino = (EditText)findViewById(R.id.destino);
+        EditText qtdePessoas = (EditText)findViewById(R.id.qtdePessoas);
+
+        String strDataPartida = dataPartida.getText().toString()+" "+horaPartida.getText().toString();
+        String strDataChegada = dataPartida.getText().toString()+" "+horaPartida.getText().toString();
+        try {
+            JSONObject dataObject = new JSONObject();
+            dataObject.put("titulo", titulo.getText().toString());
+            dataObject.put("dataPartida", strDataPartida);
+            dataObject.put("dataChegada", strDataChegada);
+            dataObject.put("origem", origem.getText().toString());
+            dataObject.put("destino", destino.getText().toString());
+            dataObject.put("qtdePessoas", qtdePessoas.getText().toString());
+            dataObject.put("usuarioId", usuario.getId());
+
+            sendViagemToServer(dataObject);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void sendViagemToServer(JSONObject dataObject){
+        String url = RestUrls.host+RestUrls.viagemCadastrar;
+
+        final Activity currentActivity = this;
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (url, dataObject, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        System.out.println(response);
+
+                        try{
+                            String responseStatus = response.get("status").toString();
+                            if(responseStatus.equalsIgnoreCase("ok")){
+                                AndroidUtils.alertTripUser("Viagem criada com sucesso!", currentActivity);
+                            }else{
+                                AndroidUtils.alertTripUser("Erro ao criar a viagem! "+  response.get("erro").toString(), currentActivity);
+                            }
+
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub, print error message
+                        System.out.println("Erro ao enviar o cadastro: "+error.getMessage());
+                        AndroidUtils.alertUser("Erro ao enviar o cadastro: " + error.getMessage(), currentActivity);
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
+        requestQueue.start();
+
     }
 
     @Override

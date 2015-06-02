@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Usuario implements Parcelable{
+    private int id;
     public String nome;
     private String email;
     private String senha;
@@ -31,6 +32,9 @@ public class Usuario implements Parcelable{
         nome=in.readString();
         cargo=in.readString();
         email=in.readString();
+        in.readString();
+        id = in.readInt();
+
     }
 
     @Override
@@ -44,6 +48,7 @@ public class Usuario implements Parcelable{
         dest.writeString(cargo);
         dest.writeString(email);
         dest.writeString(senha);
+        dest.writeInt(id);
     }
 
     public void setNome(String nome){
@@ -78,4 +83,19 @@ public class Usuario implements Parcelable{
         return this.cargo;
     }
 
+    public int getId(){
+        return this.id;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public void print(){
+        System.out.println(this.nome);
+        System.out.println(this.id);
+        System.out.println(this.email);
+        System.out.println(this.cargo);
+        System.out.println(this.senha);
+    }
 }

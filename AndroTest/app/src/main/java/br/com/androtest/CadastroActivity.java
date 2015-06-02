@@ -195,6 +195,7 @@ public class CadastroActivity extends Activity {
                             usuario = new Usuario();
                             JSONObject userResponse = response.getJSONObject("usuario");
                             usuario.setNome(userResponse.getString("nome"));
+                            usuario.setId(userResponse.getInt("id"));
                             usuario.setEmail(userResponse.getString("email"));
                             usuario.setCargo(userResponse.getString("cargo"));
 

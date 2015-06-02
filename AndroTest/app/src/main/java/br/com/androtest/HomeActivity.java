@@ -1,6 +1,7 @@
 package br.com.androtest;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,17 +25,19 @@ public class HomeActivity extends Activity {
 
     private ListView mainListView;
     private ArrayAdapter<Viagem> adapter;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Usuario usuario=getIntent().getExtras().getParcelable("usuarioParcelable");
-
+        usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
+        System.out.println("Na home");
+        usuario.print();
         ImageButton addTarefa=(ImageButton)findViewById(R.id.buttonAddTarefa);
 
-        if (usuario.getCargo().equals("Solicitante")==false)
+        if (usuario.getCargo().equalsIgnoreCase("Solicitante")==false)
             addTarefa.setVisibility(View.INVISIBLE);
 
         // teste
@@ -84,6 +87,12 @@ public class HomeActivity extends Activity {
         mainListView= (ListView) findViewById(R.id.viagensListView);
         mainListView.setAdapter(adapter);
 
+    }
+
+    public void novaViagem(View view){
+        Intent intent= new Intent(this,ViagemActivity.class);
+        intent.putExtra("usuarioParcelable", usuario);
+        startActivity(intent);
     }
 
     @Override
