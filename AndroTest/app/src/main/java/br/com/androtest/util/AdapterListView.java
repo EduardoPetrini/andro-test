@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,26 +19,25 @@ import br.com.androtest.R;
 
 public class AdapterListView extends BaseAdapter{
 
-    private ArrayList<Viagem> listaViagens;
+    private ArrayList<Atividade> listaAtividades;
     private Context context;
-    private int numViagens=0;
+    private int numAtividades=0;
 
-    public AdapterListView(Context context, ArrayList<Viagem> viagems){
+    public AdapterListView(Context context, ArrayList<Atividade> listaAtividades){
         //intens do list view
-        this.listaViagens=viagems;
+        this.listaAtividades=listaAtividades;
         this.context=context;
-        this.numViagens=viagems.size();
-
+        this.numAtividades=listaAtividades.size();
     }
 
     @Override
     public int getCount() {
-        return numViagens;
+        return numAtividades;
     }
 
     @Override
-    public Viagem getItem(int position) {
-        return listaViagens.get(position);
+    public Atividade getItem(int position) {
+        return listaAtividades.get(position);
     }
 
     @Override
@@ -49,22 +49,16 @@ public class AdapterListView extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the current list item
-        final  Viagem viagem =listaViagens.get(position);
+        final  Atividade atividade =listaAtividades.get(position);
         // Get the layout for the list item
         final RelativeLayout activity_item_lista=(RelativeLayout)LayoutInflater.from(context).inflate(R.layout.activity_item_lista,parent,false);
-
         // Set the text label as defined in our list item
         TextView txtTitulo = (TextView) activity_item_lista.findViewById(R.id.textViewTitulo);
 
-        txtTitulo.setText(viagem.getTitulo());
+        txtTitulo.setText(atividade.getTitulo());
         TextView txtData = (TextView) activity_item_lista.findViewById(R.id.textViewTarefa);
         txtData.setText("Solicitada");
 
         return activity_item_lista;
-
-    }
-
-    public class viagensSuporte{
-        TextView titulo, data,notificacao,status;
     }
 }

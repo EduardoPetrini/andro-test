@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
@@ -13,7 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,6 +38,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class ViagemActivity extends Activity {
 
     private Usuario usuario;
+    private Viagem viagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +50,12 @@ public class ViagemActivity extends Activity {
         setContentView(R.layout.activity_viagem);
 
         usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
+        viagem = getIntent().getExtras().getParcelable("viagemParcelable");
+        System.out.println("Titulo no Inicio a Viagem Activity: " + viagem.getId());
+        //viagem.print();
+
         System.out.println("Na tela de cadastro de viagem");
-        usuario.print();
+        //usuario.print();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/comfortaa-regular.ttf")
@@ -71,6 +80,54 @@ public class ViagemActivity extends Activity {
                         Gravity.CENTER
                 )
         );
+
+        if(viagem!=null){
+            preencherTela(viagem);
+            Button bottunCriar=(Button)findViewById(R.id.criar);
+            bottunCriar.setVisibility(View.INVISIBLE);
+        }
+
+        if(usuario!=null){
+            LinearLayout layoutBAutorizador=(LinearLayout)findViewById(R.id.layoutBotoesAutorizadr);
+            LinearLayout layoutBMotorista=(LinearLayout)findViewById(R.id.layoutBotoesMotorista);
+            Button BotaoSolicitante=(Button)findViewById(R.id.buttonCriar);
+
+            //layoutBAutorizador.setVisibility(View.INVISIBLE);
+            layoutBMotorista.setVisibility(View.INVISIBLE);
+            BotaoSolicitante.setVisibility(View.INVISIBLE);
+
+            if(usuario.getCargo().equals("Autorizador")){
+                layoutBAutorizador.setVisibility(View.VISIBLE);
+            }
+            if(usuario.getCargo().equals("Solicitante")){;
+                BotaoSolicitante.setVisibility(View.VISIBLE);
+            }
+            if(usuario.getCargo().equals("Motorista")){
+                layoutBMotorista.setVisibility(View.VISIBLE);
+            }
+
+        }
+    }
+
+    private void preencherTela(Viagem viagem) {
+        EditText titulo = (EditText)findViewById(R.id.inputTitulo);
+        titulo.setText(viagem.getTitulo());
+        System.out.println("Titulo: "+viagem.getTitulo());
+        EditText dataPartida = (EditText)findViewById(R.id.dataPartida);
+        dataPartida.setText(viagem.getDataPartida());
+        EditText horaPartida = (EditText)findViewById(R.id.horaPartida);
+        horaPartida.setText("12:00");// Inserir campo hora
+        EditText dataChegada = (EditText)findViewById(R.id.dataChegada);
+        dataChegada.setText(viagem.getDataChegada());
+        EditText horaChegada = (EditText)findViewById(R.id.horaChegada);
+        horaChegada.setText("12:00");
+        EditText origem = (EditText)findViewById(R.id.origem);
+        origem.setText(viagem.getCidadeOrigem());
+        EditText destino = (EditText)findViewById(R.id.destino);
+        destino.setText(viagem.getCidadeDestino());
+        EditText qtdePessoas = (EditText)findViewById(R.id.qtdePessoas);
+        qtdePessoas.setText(viagem.getQtdePessoas());
+
     }
 
     public void criar(View view){

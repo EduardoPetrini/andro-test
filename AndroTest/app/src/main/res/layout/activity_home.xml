@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".HomeActivity"
@@ -21,7 +20,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:src="@mipmap/ic_user"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/viagensListView" />
+        android:layout_above="@+id/atividadesListView"/>
 
     <TextView
         android:id="@+id/nomeUsuario"
@@ -52,13 +51,14 @@
         android:layout_below="@+id/nomeUsuario" />
 
     <ListView
-        android:id="@+id/viagensListView"
+        android:id="@+id/atividadesListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cargoUsuario"
         android:layout_above="@+id/buttonAddTarefa"
         android:layout_marginTop="-4dp"
-        android:layout_marginBottom="-4dp">
+        android:layout_marginBottom="-4dp"
+        android:clickable="true">
 
     </ListView>
 
@@ -72,6 +72,7 @@
         android:background="@mipmap/ic_add"
         android:maxHeight="72dp"
         android:maxWidth="72dp"
-        android:onClick="novaViagem"/>
+        android:onClick="abrirTarefa"
+        android:clickable="true"/>
 
 </RelativeLayout>

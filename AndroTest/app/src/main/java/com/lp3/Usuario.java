@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Usuario implements Parcelable{
     private int id;
+    private int idApi;
     public String nome;
     private String email;
     private String senha;
@@ -23,12 +24,12 @@ public class Usuario implements Parcelable{
     };
 
     private Usuario(Parcel in) {
-        readFromParel(in);
+        readFromParcel(in);
     }
 
     public Usuario (){}
 
-    private void readFromParel(Parcel in) {
+    private void readFromParcel(Parcel in) {
         nome=in.readString();
         cargo=in.readString();
         email=in.readString();

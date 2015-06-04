@@ -42,6 +42,13 @@
     <string name="origem">Origem</string>
     <string name="destino">Destino</string>
     <string name="qtde_pessoas">Quantidade de pessoas</string>
+    <string name="custo_orcado">Custo Orcado</string>
+    <string name="custo_real">Custo Real</string>
     <string name="button_create_viagem">Criar</string>
-    <string name="ok">Ok</string>
+    <string name="button_ok">Ok</string>
+    <string name="button_aceitar">Aceitar</string>
+    <string name="button_rejeitar">Rejeitar</string>
+    <string name="button_iniciar_viagem">Iniciar Viagem</string>
+    <string name="button_terminar_viagem">Terminar Viagem</string>
+
 </resources>

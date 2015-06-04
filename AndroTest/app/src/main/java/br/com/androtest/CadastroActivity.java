@@ -188,6 +188,7 @@ public class CadastroActivity extends Activity {
 
                     @Override
                     public void onResponse(JSONObject response) {
+
                         AndroidUtils.alertUser("Cadastro enviado com sucesso!", currentActivity);
                         System.out.println(response);
 
