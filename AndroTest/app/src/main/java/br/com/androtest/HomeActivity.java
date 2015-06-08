@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.lp3.GrupoUsuarioApi;
 import com.lp3.Usuario;
 import com.lp3.Viagem;
 
@@ -47,14 +48,18 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //testar se temgrupo usuario
-        usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
-        usuario.print();
+        usuario = new Usuario();
+        usuario.setNome("Danilo");
+        usuario.setId(13);
+        usuario.setEmail("danilo@email.com");
+        GrupoUsuarioApi gp = new GrupoUsuarioApi();
+        gp.setIdBpms("1");
+        gp.setId("12");
+        gp.setNome("grupoUsuario.nome");
 
-        int i=9;
-        while(i !=1){
-            i=0;
-        };
+        usuario.setGrupoUsuario(gp);
+
+        //usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
 
         ImageButton addTarefa=(ImageButton)findViewById(R.id.buttonAddTarefa);
 
@@ -72,6 +77,7 @@ public class HomeActivity extends Activity {
         cargoUsuario.setText(usuario.grupoUsuario.getNome());
 
         //obter lista de viagens do usuário futuramente pelo webservice
+
         //pegar o id do usuário e passar para o web service pedindo como retorno a lista de atividades
 
         //solicitaAtividades(usuario);
@@ -81,7 +87,7 @@ public class HomeActivity extends Activity {
 
 
         //Chama o webservice para solicitar as atividades, espera pela resposta
-        solicitaAtividades();
+        /*solicitaAtividades();
         while(!responseServe);
         responseServe = false;
 
@@ -109,7 +115,9 @@ public class HomeActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
+
+        goToUpDateViagem();
 
     }
 
@@ -262,8 +270,25 @@ public class HomeActivity extends Activity {
 
     public void goToUpDateViagem(){
 
+        System.out.println("Na go to up date viagem");
+
+        viagemV=new Viagem();
+        viagemV.setId(11);
+        viagemV.setQtdePessoas(13);
+        viagemV.setStatus("status");
+        viagemV.setTitulo("Excursãooo");
+        viagemV.setCidadeOrigem("Lavras");
+        viagemV.setCidadeDestino("BH");
+        viagemV.setDataPartida("27/01/2015");
+        viagemV.setDataChegada("30/01/2015");
+        viagemV.setCustoOrcado(600);
+        viagemV.setCustoReal(600);
+        viagemV.setHoraPartida("12:00");
+        viagemV.setHoraChegada("12:00");
+
         Intent intent= new Intent(this,ViagemActivity.class);
         intent.putExtra("viagemParcelable",viagemV);
+        intent.putExtra("usuarioParcelable",usuario);
         startActivity(intent);
     }
 }

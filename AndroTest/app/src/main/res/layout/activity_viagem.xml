@@ -24,77 +24,101 @@
         android:textAppearance="@style/comforttaFont"
         android:layout_marginTop="3dp"/>
 
-    <TextView
-        android:id="@+id/headDataPartida"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/head_data_partida"
-        android:textAppearance="@style/comforttaFont"
-        android:layout_below="@+id/inputTitulo"
-        android:layout_marginTop="8dp"/>
-
-    <LinearLayout
-        android:id="@+id/layoutDataPartida"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/layoutDatas"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/headDataPartida">
+        android:layout_below="@id/inputTitulo">
 
-        <EditText
-            android:id="@+id/dataPartida"
+        <RelativeLayout
+            android:id="@+id/layoutDataPartidaAgrupador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/data"
-            android:inputType="date"
-            android:textAppearance="@style/comforttaFont"/>
-        <EditText
-            android:id="@+id/horaPartida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/hora"
-            android:inputType="datetime"
-            android:textAppearance="@style/comforttaFont"/>
-    </LinearLayout>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/headDataPartida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text= "@string/head_data_partida"
+                android:textAppearance="@style/comforttaFont"
+                android:layout_marginTop="8dp"/>
 
-    <TextView
-        android:id="@+id/headDataChegada"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/head_data_chegada"
-        android:textAppearance="@style/comforttaFont"
-        android:layout_below="@+id/layoutDataPartida"
-        android:layout_marginTop="8dp"/>
+            <LinearLayout
+                android:id="@+id/layoutDataPartida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/headDataPartida">
 
-    <LinearLayout
-        android:id="@+id/layoutDataChegada"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/headDataChegada">
+                <EditText
+                    android:id="@+id/dataPartida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/data"
+                    android:inputType="date"
+                    android:textAppearance="@style/comforttaFont"/>
+                <EditText
+                    android:id="@+id/horaPartida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hora"
+                    android:inputType="datetime"
+                    android:textAppearance="@style/comforttaFont"/>
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/dataChegada"
-            android:layout_width="wrap_content"
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutDataChegadaAgrupador"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/data"
-            android:inputType="date"
-            android:textAppearance="@style/comforttaFont"/>
-        <EditText
-            android:id="@+id/horaChegada"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/hora"
-            android:inputType="datetime"
-            android:textAppearance="@style/comforttaFont"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/layoutDataPartidaAgrupador"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/headDataChegada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/head_data_chegada"
+                android:textAppearance="@style/comforttaFont"
+                android:layout_marginTop="8dp"/>
+
+            <LinearLayout
+                android:id="@+id/layoutDataChegada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/headDataChegada">
+
+                <EditText
+                    android:id="@+id/dataChegada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/data"
+                    android:inputType="date"
+                    android:textAppearance="@style/comforttaFont"/>
+                <EditText
+                    android:id="@+id/horaChegada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hora"
+                    android:inputType="datetime"
+                    android:textAppearance="@style/comforttaFont"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/origem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/origem"
-        android:layout_below="@+id/layoutDataChegada"
-        android:layout_marginTop="5dp"
+        android:layout_below="@+id/layoutDatas"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/comforttaFont"/>
 
     <EditText
@@ -103,7 +127,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/destino"
         android:layout_below="@+id/origem"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/comforttaFont"/>
 
     <LinearLayout
@@ -112,7 +136,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/destino"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/HeadqtdePessoas"
@@ -135,7 +159,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/layoutQtde"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/HeadCustoOrcado"
@@ -158,7 +182,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/layoutCustoOrcado"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/HeadCustoReal"
@@ -175,22 +199,46 @@
             android:textAppearance="@style/comforttaFont"/>
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/layoutSelecionarMotorista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutCustoReal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textSelecionarMotorista"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/motorista"
+            android:textAppearance="@style/comforttaFont"/>
+
+        <Spinner
+            android:id="@+id/spinnerMotorista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/escolher_motorista"
+            android:textAppearance="@style/comforttaFont"
+            android:layout_toRightOf="@+id/textSelecionarMotorista"/>
+
+    </RelativeLayout>
+
     <Button
         android:id="@+id/buttonCriar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:text="@string/button_create_viagem"
         android:textAppearance="@style/comforttaFont"
         android:background="@color/blue_default"
-        android:onClick="criar"/>
+        android:onClick="criar"
+        android:layout_alignParentBottom="true"/>
 
     <LinearLayout
         android:id="@+id/layoutBotoesAutorizadr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/layoutCustoReal"
         android:gravity="center_horizontal">
 
         <Button
@@ -200,7 +248,6 @@
             android:layout_height="wrap_content"
             android:text="@string/button_aceitar"
             android:textAppearance="@style/comforttaFont"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="left"
             android:background="@color/blue_default"
             android:onClick="aceitar"
@@ -214,7 +261,6 @@
             android:text="@string/button_rejeitar"
             android:textAppearance="@style/comforttaFont"
             android:background="@color/blue_default"
-            android:layout_gravity="right"
             android:onClick="rejeitar"
             android:layout_marginLeft="10dp"/>
 
@@ -225,7 +271,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/layoutCustoReal"
         android:gravity="center_horizontal">
 
         <Button
@@ -235,7 +280,6 @@
             android:layout_height="wrap_content"
             android:text="@string/button_iniciar_viagem"
             android:textAppearance="@style/comforttaFont"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="left"
             android:background="@color/blue_default"
             android:onClick="iniciarViagem"
@@ -255,5 +299,15 @@
 
     </LinearLayout>
 
+    <Button
+            android:id="@+id/buttonEnviarTransportador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_enviar"
+            android:textAppearance="@style/comforttaFont"
+            android:layout_alignParentBottom="true"
+            android:background="@color/blue_default"
+            android:onClick="EnviarTransportador"
+            android:gravity="center_horizontal"/>
 
 </RelativeLayout>

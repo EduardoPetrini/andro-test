@@ -36,7 +36,7 @@
     <string name="head_cadastrar_viagem">Cadastrar viagem:</string>
     <string name="viagem_titulo">Título</string>
     <string name="head_data_partida">Data de partida</string>
-    <string name="head_data_chegada">Data de partida</string>
+    <string name="head_data_chegada">Data de chegada</string>
     <string name="data">dd/mm/aaaa</string>
     <string name="hora">hh:mm</string>
     <string name="origem">Origem</string>
@@ -51,5 +51,16 @@
     <string name="button_rejeitar">Rejeitar</string>
     <string name="button_iniciar_viagem">Iniciar Viagem</string>
     <string name="button_terminar_viagem">Terminar Viagem</string>
+    <string name="button_enviar">Enviar</string>
+
+    <string name="motorista">Motorista:</string>
+    <string name="escolher_motorista">Selecionar Motorista</string>
+    <string-array name="motoristas">
+        <item>Selecione o motorista</item>
+        <item>Godolfredo</item>
+        <item>Cleuza</item>
+        <item>Florentina</item>
+        <item>Zé</item>
+    </string-array>
 
 </resources>

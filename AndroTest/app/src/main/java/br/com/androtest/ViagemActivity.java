@@ -2,9 +2,7 @@ package br.com.androtest;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
@@ -14,10 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -51,11 +50,11 @@ public class ViagemActivity extends Activity {
 
         usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
         viagem = getIntent().getExtras().getParcelable("viagemParcelable");
-        System.out.println("Titulo no Inicio a Viagem Activity: " + viagem.getId());
-        //viagem.print();
 
-        System.out.println("Na tela de cadastro de viagem");
-        //usuario.print();
+        Spinner spinner= (Spinner)findViewById(R.id.spinnerMotorista);
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.motoristas,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/comfortaa-regular.ttf")
@@ -87,25 +86,30 @@ public class ViagemActivity extends Activity {
             bottunCriar.setVisibility(View.INVISIBLE);
         }
 
-        if(usuario!=null){
-            LinearLayout layoutBAutorizador=(LinearLayout)findViewById(R.id.layoutBotoesAutorizadr);
-            LinearLayout layoutBMotorista=(LinearLayout)findViewById(R.id.layoutBotoesMotorista);
-            Button BotaoSolicitante=(Button)findViewById(R.id.buttonCriar);
+        System.out.println("Usuário não é null");
+        LinearLayout layoutBAutorizador=(LinearLayout)findViewById(R.id.layoutBotoesAutorizadr);
+        LinearLayout layoutBMotorista=(LinearLayout)findViewById(R.id.layoutBotoesMotorista);
+        Button BotaoSolicitante=(Button)findViewById(R.id.buttonCriar);
+        Button BotaoTransportador=(Button)findViewById(R.id.buttonEnviarTransportador);
 
-            //layoutBAutorizador.setVisibility(View.INVISIBLE);
-            layoutBMotorista.setVisibility(View.INVISIBLE);
-            BotaoSolicitante.setVisibility(View.INVISIBLE);
+        layoutBAutorizador.setVisibility(View.INVISIBLE);
+        layoutBMotorista.setVisibility(View.INVISIBLE);
+        BotaoSolicitante.setVisibility(View.INVISIBLE);
+        BotaoTransportador.setVisibility(View.INVISIBLE);
 
-            if(usuario.grupoUsuario.idBpms.equalsIgnoreCase("1")){
+        switch (usuario.grupoUsuario.idBpms.toString()){
+            case "1":
                 layoutBAutorizador.setVisibility(View.VISIBLE);
-            }
-            if(usuario.grupoUsuario.idBpms.equalsIgnoreCase("3")){;
+                break;
+            case "2":
                 BotaoSolicitante.setVisibility(View.VISIBLE);
-            }
-            if(usuario.grupoUsuario.idBpms.equalsIgnoreCase("2")){
+                break;
+            case "3":
                 layoutBMotorista.setVisibility(View.VISIBLE);
-            }
-
+                break;
+            case "4":
+                BotaoTransportador.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
@@ -126,7 +130,11 @@ public class ViagemActivity extends Activity {
         EditText destino = (EditText)findViewById(R.id.destino);
         destino.setText(viagem.getCidadeDestino());
         EditText qtdePessoas = (EditText)findViewById(R.id.qtdePessoas);
-        qtdePessoas.setText(viagem.getQtdePessoas());
+        qtdePessoas.setText(Integer.toString(viagem.getQtdePessoas()));
+        EditText custoOrcado = (EditText)findViewById(R.id.custoOrcado);
+        custoOrcado.setText(Double.toString(viagem.getCustoOrcado()));
+        EditText custoReal = (EditText)findViewById(R.id.custoReal);
+        custoReal.setText(Double.toString(viagem.getCustoReal()));
 
     }
 
