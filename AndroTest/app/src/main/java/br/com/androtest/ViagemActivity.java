@@ -83,7 +83,7 @@ public class ViagemActivity extends Activity {
 
         if(viagem!=null){
             preencherTela(viagem);
-            Button bottunCriar=(Button)findViewById(R.id.criar);
+            Button bottunCriar=(Button)findViewById(R.id.buttonCriar);
             bottunCriar.setVisibility(View.INVISIBLE);
         }
 
@@ -112,7 +112,7 @@ public class ViagemActivity extends Activity {
     private void preencherTela(Viagem viagem) {
         EditText titulo = (EditText)findViewById(R.id.inputTitulo);
         titulo.setText(viagem.getTitulo());
-        System.out.println("Titulo: "+viagem.getTitulo());
+        System.out.println("Titulo: " + viagem.getTitulo());
         EditText dataPartida = (EditText)findViewById(R.id.dataPartida);
         dataPartida.setText(viagem.getDataPartida());
         EditText horaPartida = (EditText)findViewById(R.id.horaPartida);

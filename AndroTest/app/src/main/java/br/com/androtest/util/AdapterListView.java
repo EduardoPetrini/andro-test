@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lp3.AtividadeApi;
 import com.lp3.Viagem;
 
 import java.util.ArrayList;
@@ -19,11 +20,11 @@ import br.com.androtest.R;
 
 public class AdapterListView extends BaseAdapter{
 
-    private ArrayList<Atividade> listaAtividades;
+    private ArrayList<AtividadeApi> listaAtividades;
     private Context context;
     private int numAtividades=0;
 
-    public AdapterListView(Context context, ArrayList<Atividade> listaAtividades){
+    public AdapterListView(Context context, ArrayList<AtividadeApi> listaAtividades){
         //intens do list view
         this.listaAtividades=listaAtividades;
         this.context=context;
@@ -36,7 +37,7 @@ public class AdapterListView extends BaseAdapter{
     }
 
     @Override
-    public Atividade getItem(int position) {
+    public AtividadeApi getItem(int position) {
         return listaAtividades.get(position);
     }
 
@@ -49,13 +50,13 @@ public class AdapterListView extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the current list item
-        final  Atividade atividade =listaAtividades.get(position);
+        final  AtividadeApi atividade =listaAtividades.get(position);
         // Get the layout for the list item
         final RelativeLayout activity_item_lista=(RelativeLayout)LayoutInflater.from(context).inflate(R.layout.activity_item_lista,parent,false);
         // Set the text label as defined in our list item
         TextView txtTitulo = (TextView) activity_item_lista.findViewById(R.id.textViewTitulo);
 
-        txtTitulo.setText(atividade.getTitulo());
+        txtTitulo.setText(atividade.getNome());
         TextView txtData = (TextView) activity_item_lista.findViewById(R.id.textViewTarefa);
         txtData.setText("Solicitada");
 

@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.lp3.GrupoUsuarioApi;
 import com.lp3.Usuario;
 
 import org.json.JSONException;
@@ -143,7 +144,11 @@ public class LoginActivity extends Activity {
                                 usuario.setNome(userResponse.getString("nome"));
                                 usuario.setId(userResponse.getInt("id"));
                                 usuario.setEmail(userResponse.getString("email"));
-                                usuario.setCargo(userResponse.getString("cargo"));
+                                GrupoUsuarioApi gp = new GrupoUsuarioApi();
+                                gp.setIdBpms(userResponse.getString("grupoUsuario.idBpms"));
+                                gp.setNome(userResponse.getString("grupoUsuario.nome"));
+
+                                usuario.setGrupoUsuario(gp);
 
                                 goToHome();
 
