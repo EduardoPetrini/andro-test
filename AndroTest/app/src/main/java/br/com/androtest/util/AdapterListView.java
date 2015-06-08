@@ -52,7 +52,7 @@ public class AdapterListView extends BaseAdapter{
         // Set the text label as defined in our list item
         TextView txtTitulo = (TextView) activity_item_lista.findViewById(R.id.textViewTitulo);
 
-        txtTitulo.setText(atividade.getTitulo());
+        txtTitulo.setText(atividade.getNome());
         TextView txtData = (TextView) activity_item_lista.findViewById(R.id.textViewTarefa);
         txtData.setText("Solicitada");
 

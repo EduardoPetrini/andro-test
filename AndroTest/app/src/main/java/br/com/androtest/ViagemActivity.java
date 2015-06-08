@@ -144,7 +144,7 @@ public class ViagemActivity extends Activity {
         String strDataChegada = dataPartida.getText().toString()+" "+horaPartida.getText().toString();
         try {
             JSONObject dataObject = new JSONObject();
-            dataObject.put("titulo", titulo.getText().toString());
+            dataObject.put("nome", titulo.getText().toString());
             dataObject.put("dataPartida", strDataPartida);
             dataObject.put("dataChegada", strDataChegada);
             dataObject.put("origem", origem.getText().toString());
