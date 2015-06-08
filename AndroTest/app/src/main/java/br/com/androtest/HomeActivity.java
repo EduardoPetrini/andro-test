@@ -169,19 +169,18 @@ public class HomeActivity extends Activity {
 
                         try{
                             if(response.isNull("erro")){
+                                viagemV = new Viagem();
                                 JSONObject viagem = response.getJSONObject("Viagem");
-                                viagemV.setId(viagem.getInt("id"));
-                                viagemV.setQtdePessoas(viagem.getInt("qtdePessoas"));
+                                viagemV.setId(Integer.parseInt(viagem.getString("id")));
+                                viagemV.setQtdePessoas(Integer.parseInt(viagem.getString("qtdePessoas")));
                                 viagemV.setTitulo(viagem.getString("titulo"));
                                 viagemV.setStatus(viagem.getString("status"));
                                 viagemV.setCidadeOrigem(viagem.getString("cidadeOrigem"));
                                 viagemV.setCidadeDestino(viagem.getString("cidadeDestino"));
-                                SimpleDateFormat format = new SimpleDateFormat();
-                                format.applyPattern("dd/mm/yyyy");
-                                viagemV.setDataPartida(format.format(new Date(Long.parseLong(viagem.getString("dataPartida")))));
-                                viagemV.setDataChegada(format.format(new Date(Long.parseLong(viagem.getString("dataChegada")))));
-                                viagemV.setCustoOrcado(viagem.getDouble("custoOrcado"));
-                                viagemV.setCustoReal(viagem.getDouble("custoReal"));
+                                viagemV.setDataPartida(viagem.getString("dataPartida"));
+                                viagemV.setDataChegada(viagem.getString("dataChegada"));
+                                viagemV.setCustoOrcado(Double.parseDouble(viagem.getString("custoOrcado")));
+                                viagemV.setCustoReal(Double.parseDouble(viagem.getString("custoReal")));
                                 viagemV.setHoraPartida(viagem.getString("horaPartida"));
                                 viagemV.setHoraChegada(viagem.getString("horaChegada"));
                                 goToUpDateViagem();
@@ -245,8 +244,8 @@ public class HomeActivity extends Activity {
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Atividade atividade =(Atividade)adapter.getItem(position);
-                Object item =mainListView.getItemAtPosition(position);
+                Atividade atividade = (Atividade) adapter.getItem(position);
+                Object item = mainListView.getItemAtPosition(position);
                 System.out.println("Atividade nome: " + atividade.getNome() + " Nome: " + atividade.getParametros().getEntityNome()
                         + "ID: " + atividade.getParametros().getEntityId());
 
