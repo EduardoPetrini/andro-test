@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.lp3.GrupoUsuarioApi;
 import com.lp3.Usuario;
 
 import org.json.JSONException;
@@ -120,7 +121,27 @@ public class CadastroActivity extends Activity {
         usuario.setSenha(senha.getText().toString());
         EditText confSenha = (EditText) findViewById(R.id.inputConfSenha);
         Spinner spinner= (Spinner)findViewById(R.id.spinnerCargo);
-        usuario.setCargo(spinner.getSelectedItem().toString());
+
+        //usuario.setCargo(spinner.getSelectedItem().toString());
+        GrupoUsuarioApi gp = new GrupoUsuarioApi();
+        if(spinner.getSelectedItem().toString().equalsIgnoreCase("1")){
+            gp.idBpms="1";
+            gp.setNome("Autorizador");
+        }
+        if(spinner.getSelectedItem().toString().equalsIgnoreCase("2")){;
+            gp.idBpms="2";
+            gp.setNome("Motorista");
+        }
+        if(spinner.getSelectedItem().toString().equalsIgnoreCase("3")){
+            gp.idBpms="3";
+            gp.setNome("Solicitante");
+        }
+        if(spinner.getSelectedItem().toString().equalsIgnoreCase("4")){
+            gp.idBpms="4";
+            gp.setNome("Transportador");
+        }
+
+        usuario.setGrupoUsuario(gp);
         //        "{\"type\":\"example\"}";
 
         if(validateFields(nome, email, spinner, senha, confSenha)) {
@@ -198,8 +219,13 @@ public class CadastroActivity extends Activity {
                             usuario.setNome(userResponse.getString("nome"));
                             usuario.setId(userResponse.getInt("id"));
                             usuario.setEmail(userResponse.getString("email"));
-                            usuario.setCargo(userResponse.getString("cargo"));
 
+                            GrupoUsuarioApi gp= new GrupoUsuarioApi();
+                            //usuario.setCargo(userResponse.getString("cargo"));
+                            gp.setIdBpms(userResponse.getString("IdBpms"));
+                            gp.setNome(userResponse.getString("nome"));
+
+                            usuario.setGrupoUsuario(gp);
                             goToHome();
 
                         }catch(JSONException e){

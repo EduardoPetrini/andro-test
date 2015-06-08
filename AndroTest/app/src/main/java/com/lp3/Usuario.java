@@ -10,8 +10,6 @@ public class Usuario extends UsuarioApi implements Parcelable {
     private String email;
     private String senha;
 
-
-
     public static final Parcelable.Creator<Usuario>CREATOR=new Parcelable.Creator<Usuario>(){
 
         public Usuario createFromParcel(Parcel in){
@@ -34,7 +32,12 @@ public class Usuario extends UsuarioApi implements Parcelable {
         email=in.readString();
         in.readString();
         id = in.readInt();
-        super.grupoUsuario = in.readParcelable(null);
+        this.grupoUsuario = new GrupoUsuarioApi();
+        this.grupoUsuario.setNome(in.readString());
+        this.grupoUsuario.setId(in.readString());
+        this.grupoUsuario.setIdBpms(in.readString());
+        //this.grupoUsuario = in.readParcelable(ClassLoader.getSystemClassLoader());
+        //super.grupoUsuario = in.readParcelable(ClassLoader.getSystemClassLoader());
 
     }
 
@@ -49,7 +52,9 @@ public class Usuario extends UsuarioApi implements Parcelable {
         dest.writeString(email);
         dest.writeString(senha);
         dest.writeInt(id);
-        dest.writeParcelable(super.grupoUsuario, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+        dest.writeString(this.grupoUsuario.getNome());
+        dest.writeString(this.grupoUsuario.getId());
+        dest.writeString(this.grupoUsuario.getIdBpms());
     }
 
     public void setNome(String nome){
@@ -85,9 +90,12 @@ public class Usuario extends UsuarioApi implements Parcelable {
     }
 
     public void print(){
-        System.out.println(this.nome);
-        System.out.println(this.id);
-        System.out.println(this.email);
-        System.out.println(this.senha);
+        System.out.println("Nome:"+this.nome);
+        System.out.println("id:"+this.id);
+        System.out.println("email:"+this.email);
+        System.out.println("senha:"+this.senha);
+        System.out.println("NomeGrupo:"+super.grupoUsuario.getNome());
+        System.out.println("Nome Id:"+super.grupoUsuario.getId());
+        System.out.println("NomeIdBpms:"+super.grupoUsuario.getIdBpms());
     }
 }

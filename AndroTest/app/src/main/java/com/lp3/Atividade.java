@@ -1,4 +1,4 @@
-package br.com.androtest.util;
+package com.lp3;
 
 /**
  * Created by Danilo on 02/06/2015.

@@ -86,14 +86,26 @@ public class LoginActivity extends Activity {
     }
 
     public void entrar(View view){
-        //Intent intent= new Intent(this, CadastroActivity.class);
 
         //pega as informacoes da tela
         System.out.println("Logando no sistema...");
-        EditText emailField = (EditText)findViewById(R.id.usuario_email);
-        EditText senhaField = (EditText)findViewById(R.id.usuario_password);
+       // EditText emailField = (EditText)findViewById(R.id.usuario_email);
+        //EditText senhaField = (EditText)findViewById(R.id.usuario_password);
 
-        if(validateFields(emailField,senhaField)) {
+        usuario = new Usuario();
+        usuario.setNome("Danilo");
+        usuario.setId(13);
+        usuario.setEmail("danilo@email.com");
+        GrupoUsuarioApi gp = new GrupoUsuarioApi();
+        gp.setIdBpms("3");
+        gp.setId("12");
+        gp.setNome("grupoUsuario.nome");
+
+        usuario.setGrupoUsuario(gp);
+
+        goToHome();
+
+        /*if(validateFields(emailField,senhaField)) {
 
             JSONObject dataObject = new JSONObject();
             try {
@@ -104,7 +116,7 @@ public class LoginActivity extends Activity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
     @Override
@@ -141,12 +153,19 @@ public class LoginActivity extends Activity {
                             if(response.isNull("erro")){
                                 JSONObject userResponse = response.getJSONObject("usuario");
                                 usuario = new Usuario();
+                                usuario.setNome("Danilo");
+                                usuario.setId(13);
+                                usuario.setEmail("danilo@email.com");
+
                                 usuario.setNome(userResponse.getString("nome"));
                                 usuario.setId(userResponse.getInt("id"));
                                 usuario.setEmail(userResponse.getString("email"));
+
                                 GrupoUsuarioApi gp = new GrupoUsuarioApi();
-                                gp.setIdBpms(userResponse.getString("grupoUsuario.idBpms"));
+                                gp.setIdBpms(userResponse.getString("3"));
                                 gp.setNome(userResponse.getString("grupoUsuario.nome"));
+                               // gp.setIdBpms(userResponse.getString("grupoUsuario.idBpms"));
+                                //gp.setNome(userResponse.getString("grupoUsuario.nome"));
 
                                 usuario.setGrupoUsuario(gp);
 
@@ -175,6 +194,7 @@ public class LoginActivity extends Activity {
     }
 
     private void goToHome(){
+        usuario.print();
         Intent intent= new Intent(this,HomeActivity.class);
         intent.putExtra("usuarioParcelable", usuario);
         startActivity(intent);

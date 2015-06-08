@@ -96,13 +96,13 @@ public class ViagemActivity extends Activity {
             layoutBMotorista.setVisibility(View.INVISIBLE);
             BotaoSolicitante.setVisibility(View.INVISIBLE);
 
-            if(usuario.getCargo().equals("Autorizador")){
+            if(usuario.grupoUsuario.idBpms.equalsIgnoreCase("1")){
                 layoutBAutorizador.setVisibility(View.VISIBLE);
             }
-            if(usuario.getCargo().equals("Solicitante")){;
+            if(usuario.grupoUsuario.idBpms.equalsIgnoreCase("3")){;
                 BotaoSolicitante.setVisibility(View.VISIBLE);
             }
-            if(usuario.getCargo().equals("Motorista")){
+            if(usuario.grupoUsuario.idBpms.equalsIgnoreCase("2")){
                 layoutBMotorista.setVisibility(View.VISIBLE);
             }
 
