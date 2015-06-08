@@ -89,23 +89,23 @@ public class LoginActivity extends Activity {
 
         //pega as informacoes da tela
         System.out.println("Logando no sistema...");
-       // EditText emailField = (EditText)findViewById(R.id.usuario_email);
-        //EditText senhaField = (EditText)findViewById(R.id.usuario_password);
+        EditText emailField = (EditText)findViewById(R.id.usuario_email);
+        EditText senhaField = (EditText)findViewById(R.id.usuario_password);
 
-        usuario = new Usuario();
-        usuario.setNome("Danilo");
-        usuario.setId(13);
-        usuario.setEmail("danilo@email.com");
-        GrupoUsuarioApi gp = new GrupoUsuarioApi();
-        gp.setIdBpms("3");
-        gp.setId("12");
-        gp.setNome("grupoUsuario.nome");
+//        usuario = new Usuario();
+//        usuario.setNome("Danilo");
+//        usuario.setId(13);
+//        usuario.setEmail("danilo@email.com");
+//        GrupoUsuarioApi gp = new GrupoUsuarioApi();
+//        gp.setIdBpms("3");
+//        gp.setId("12");
+//        gp.setNome("grupoUsuario.nome");
+//
+//        usuario.setGrupoUsuario(gp);
+//
+//        goToHome();
 
-        usuario.setGrupoUsuario(gp);
-
-        goToHome();
-
-        /*if(validateFields(emailField,senhaField)) {
+        if(validateFields(emailField,senhaField)) {
 
             JSONObject dataObject = new JSONObject();
             try {
@@ -116,7 +116,7 @@ public class LoginActivity extends Activity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
     }
 
     @Override
@@ -141,6 +141,7 @@ public class LoginActivity extends Activity {
     public void sendLoginToServer(JSONObject dataObject){
         String url = RestUrls.host+RestUrls.login;
         final Activity currentActivity = this;
+        System.out.println("url: "+url);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (url, dataObject, new Response.Listener<JSONObject>() {
 
@@ -153,19 +154,15 @@ public class LoginActivity extends Activity {
                             if(response.isNull("erro")){
                                 JSONObject userResponse = response.getJSONObject("usuario");
                                 usuario = new Usuario();
-                                usuario.setNome("Danilo");
-                                usuario.setId(13);
-                                usuario.setEmail("danilo@email.com");
 
                                 usuario.setNome(userResponse.getString("nome"));
                                 usuario.setId(userResponse.getInt("id"));
                                 usuario.setEmail(userResponse.getString("email"));
 
                                 GrupoUsuarioApi gp = new GrupoUsuarioApi();
-                                gp.setIdBpms(userResponse.getString("3"));
-                                gp.setNome(userResponse.getString("grupoUsuario.nome"));
-                               // gp.setIdBpms(userResponse.getString("grupoUsuario.idBpms"));
-                                //gp.setNome(userResponse.getString("grupoUsuario.nome"));
+
+                                gp.setIdBpms(userResponse.getJSONObject("grupoUsuario").getString("idBpms"));
+                                gp.setNome(userResponse.getJSONObject("grupoUsuario").getString("nome"));
 
                                 usuario.setGrupoUsuario(gp);
 

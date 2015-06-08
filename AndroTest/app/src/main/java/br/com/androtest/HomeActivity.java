@@ -18,7 +18,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.lp3.GrupoUsuarioApi;
+
+import com.lp3.Parametros;
+
 import com.lp3.Usuario;
 import com.lp3.Viagem;
 
@@ -26,7 +30,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import br.com.androtest.util.AdapterListView;
 import br.com.androtest.util.AndroidUtils;
@@ -48,18 +54,8 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        usuario = new Usuario();
-        usuario.setNome("Danilo");
-        usuario.setId(13);
-        usuario.setEmail("danilo@email.com");
-        GrupoUsuarioApi gp = new GrupoUsuarioApi();
-        gp.setIdBpms("1");
-        gp.setId("12");
-        gp.setNome("grupoUsuario.nome");
+        usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
 
-        usuario.setGrupoUsuario(gp);
-
-        //usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
 
         ImageButton addTarefa=(ImageButton)findViewById(R.id.buttonAddTarefa);
 
@@ -76,101 +72,49 @@ public class HomeActivity extends Activity {
         cargoUsuario=(TextView)findViewById(R.id.cargoUsuario);
         cargoUsuario.setText(usuario.grupoUsuario.getNome());
 
-        //obter lista de viagens do usuário futuramente pelo webservice
-
-        //pegar o id do usuário e passar para o web service pedindo como retorno a lista de atividades
-
-        //solicitaAtividades(usuario);
-
-        //Popula ListView
-        //com o web service ele já preenche a lista de atividades dentro do metódo sendToServer
-
-
-        //Chama o webservice para solicitar as atividades, espera pela resposta
-        /*solicitaAtividades();
-        while(!responseServe);
-        responseServe = false;
-
-        final ListAdapter adapter = new AdapterListView(this,listaAtividades);
-
-        mainListView= (ListView) findViewById(R.id.atividadesListView);
-        mainListView.setAdapter(adapter);
-
-        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Atividade atividade =(Atividade)adapter.getItem(position);
-                Object item =mainListView.getItemAtPosition(position);
-                System.out.println("Atividade titulo: "+atividade.getTitulo()+" Nome: "+atividade.getParametros().getEntityNome()
-                        +"ID: "+atividade.getParametros().getEntityId());
-
-                //Chamo o web service passando com.lp3.viagem.id
-                JSONObject dataObject = new JSONObject();
-                try {
-                    dataObject.put("nome", atividade.getTitulo());
-                    dataObject.put("parametro", atividade.getParametros().getEntityId());
-                    System.out.println(dataObject);
-                    sendToServerViagem(dataObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
-
-        goToUpDateViagem();
-
+        solicitaAtividades();
     }
 
     public void solicitaAtividades(){
-
-        JSONObject dataObject = new JSONObject();
-        try {
-            dataObject.put("id", (usuario.getId()));
-            System.out.println(dataObject);
-            sendToServerUsuario(dataObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        getDataFromServerUsuario();
     }
 
-    public void sendToServerUsuario(JSONObject dataObject){
-        String url = RestUrls.host+RestUrls.getUsuarioById;
+    public void getDataFromServerUsuario(){
+        String url = RestUrls.host+RestUrls.getAtividades+usuario.getId();
+        System.out.println("Url: "+url);
         final Activity currentActivity = this;
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (url, dataObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, url, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        System.out.println(response);
+                        System.out.println("Na home...\n"+response);
 
                         try{
                             if(response.isNull("erro")){
-                                JSONArray arrayAtividades = response.getJSONArray("listaAtividades");
+                                JSONArray arrayAtividades = response.getJSONArray("atividades");
                                 //transformar objeto em lista de atividades
                                 //http://www.leveluplunch.com/java/examples/convert-json-array-to-arraylist-of-objects-jackson/
                                 //http://stackoverflow.com/questions/26814673/android-jsonarray-to-arraylist
-                                int size=arrayAtividades.length();
+                                ;
                                 Atividade atividade = null;
                                 JSONObject objAtividade;
-                                //ArrayList<Atividade> arrayAtividade;
-                                for(int i=0; i<size; i++){
+                                Parametros parametros;
+
+                                for(int i = 0; i < arrayAtividades.length(); i++){
                                     atividade = new Atividade();
-                                    atividade.setTitulo((arrayAtividades.getJSONObject(i).getString("nome")));
-                                    objAtividade = arrayAtividades.getJSONObject(i).getJSONArray("parametros").getJSONObject(0);
-                                    atividade.setTitulo(objAtividade.getString("nome"));
-                                    atividade.setParametros(objAtividade.getString("entityName"),objAtividade.getString("entityID"));
-                                    /*parametroApi = new ParametroApi();
-                                    parametroApi.setIdBpms(par.getString("idBpms"));
-                                    parametroApi.setId(par.getInt("id"));
-                                    parametroApi.setNome(par.getString("nome"));
-                                    parametroApi.setValor(par.getString("valor"));
-                                    arrayPar = new ArrayList<>();
-                                    arrayPar.add(parametroApi);
-                                    atividade.setParametros(arrayPar);*/
-                                  //arrayAtividade.add(atividade);
+                                    objAtividade = arrayAtividades.getJSONObject(i);
+
+                                    atividade.setNome(objAtividade.getString("nome"));
+
+                                    parametros = new Parametros();
+                                    parametros.setEntityId(objAtividade.getJSONObject("parametros").getString("entityId"));
+                                    parametros.setEntityNome(objAtividade.getJSONObject("parametros").getString("entityNome"));
+                                    atividade.setParametros(parametros);
+
                                     listaAtividades.add(atividade);
                                 }
+                                buildListView();
                                 responseServe = true;
                             }else{
                                 AndroidUtils.alertUser("Erro ao obter lista de atividades: " + response.getString("erro"), currentActivity);
@@ -197,11 +141,12 @@ public class HomeActivity extends Activity {
         requestQueue.start();
     }
 
-    public void sendToServerViagem(JSONObject dataObject){
-        String url = RestUrls.host+RestUrls.getViagemById;
+    public void getViagemFromServer(String entityId){
+        String url = RestUrls.host+RestUrls.getViagemById+entityId;
         final Activity currentActivity = this;
+        System.out.println("Url: "+url);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (url, dataObject, new Response.Listener<JSONObject>() {
+                (url, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -210,12 +155,13 @@ public class HomeActivity extends Activity {
 
                         try{
                             if(response.isNull("erro")){
-                                JSONObject viagem = response.getJSONObject("viagem");
+                                viagemV = new Viagem();
+                                JSONObject viagem = response.getJSONObject("Viagem");
                                 viagemV.setId(Integer.parseInt(viagem.getString("id")));
                                 viagemV.setQtdePessoas(Integer.parseInt(viagem.getString("qtdePessoas")));
                                 viagemV.setTitulo(viagem.getString("titulo"));
                                 viagemV.setStatus(viagem.getString("status"));
-                                viagemV.setCidadeOrigem(viagem.getString("cidadeOrigen"));
+                                viagemV.setCidadeOrigem(viagem.getString("cidadeOrigem"));
                                 viagemV.setCidadeDestino(viagem.getString("cidadeDestino"));
                                 viagemV.setDataPartida(viagem.getString("dataPartida"));
                                 viagemV.setDataChegada(viagem.getString("dataChegada"));
@@ -236,7 +182,7 @@ public class HomeActivity extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub, print error message
-                        System.out.println("Erro ao obter atividades: "+error.getMessage());
+                        System.out.println("Erro ao obter atividades: " + error.getMessage());
                         AndroidUtils.alertUser("Erro ao obter atividades: "+error.getMessage(), currentActivity);
                     }
                 });
@@ -290,5 +236,26 @@ public class HomeActivity extends Activity {
         intent.putExtra("viagemParcelable",viagemV);
         intent.putExtra("usuarioParcelable",usuario);
         startActivity(intent);
+    }
+
+    public void buildListView(){
+        final ListAdapter adapter = new AdapterListView(this,listaAtividades);
+
+        mainListView= (ListView) findViewById(R.id.atividadesListView);
+        mainListView.setAdapter(adapter);
+
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Atividade atividade = (Atividade) adapter.getItem(position);
+                Object item = mainListView.getItemAtPosition(position);
+                System.out.println("Atividade nome: " + atividade.getNome() + " Nome: " + atividade.getParametros().getEntityNome()
+                        + "ID: " + atividade.getParametros().getEntityId());
+
+
+                getViagemFromServer(atividade.getParametros().getEntityId());
+
+            }
+        });
     }
 }

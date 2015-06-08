@@ -120,11 +120,11 @@ public class ViagemActivity extends Activity {
         EditText dataPartida = (EditText)findViewById(R.id.dataPartida);
         dataPartida.setText(viagem.getDataPartida());
         EditText horaPartida = (EditText)findViewById(R.id.horaPartida);
-        horaPartida.setText("12:00");// Inserir campo hora
+        horaPartida.setText(viagem.getHoraPartida());// Inserir campo hora
         EditText dataChegada = (EditText)findViewById(R.id.dataChegada);
         dataChegada.setText(viagem.getDataChegada());
         EditText horaChegada = (EditText)findViewById(R.id.horaChegada);
-        horaChegada.setText("12:00");
+        horaChegada.setText(viagem.getHoraChegada());
         EditText origem = (EditText)findViewById(R.id.origem);
         origem.setText(viagem.getCidadeOrigem());
         EditText destino = (EditText)findViewById(R.id.destino);
@@ -152,7 +152,7 @@ public class ViagemActivity extends Activity {
         String strDataChegada = dataPartida.getText().toString()+" "+horaPartida.getText().toString();
         try {
             JSONObject dataObject = new JSONObject();
-            dataObject.put("titulo", titulo.getText().toString());
+            dataObject.put("nome", titulo.getText().toString());
             dataObject.put("dataPartida", strDataPartida);
             dataObject.put("dataChegada", strDataChegada);
             dataObject.put("origem", origem.getText().toString());
