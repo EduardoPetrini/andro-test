@@ -3,6 +3,12 @@ package com.lp3;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import br.com.androtest.util.AndroidUtils;
+import br.com.androtest.util.InstanciaObjeto;
+
 public class Viagem implements Parcelable {
 
     private int id, qtdePessoas;
@@ -159,7 +165,6 @@ public class Viagem implements Parcelable {
         return this.horaChegada;
     }
 
-
     public void print(){
         System.out.println(titulo);
         System.out.println(status);
@@ -173,5 +178,22 @@ public class Viagem implements Parcelable {
         System.out.println(custoReal);
         System.out.println(horaPartida);
         System.out.println(horaChegada);
+    }
+
+    public Viagem createObj(JSONObject object) throws JSONException {
+        Viagem viagem= new Viagem();
+        viagem.setId(Integer.parseInt(object.getString("id")));
+        viagem.setQtdePessoas(Integer.parseInt(object.getString("qtdePessoas")));
+        viagem.setTitulo(object.getString("titulo"));
+        viagem.setStatus(object.getString("status"));
+        viagem.setCidadeOrigem(object.getString("cidadeOrigem"));
+        viagem.setCidadeDestino(object.getString("cidadeDestino"));
+        viagem.setDataPartida(object.getString("dataPartida"));
+        viagem.setDataChegada(object.getString("dataChegada"));
+        viagem.setCustoOrcado(Double.parseDouble(object.getString("custoOrcado")));
+        viagem.setCustoReal(Double.parseDouble(object.getString("custoReal")));
+        viagem.setHoraPartida(object.getString("horaPartida"));
+        viagem.setHoraChegada(object.getString("horaChegada"));
+        return viagem;
     }
 }

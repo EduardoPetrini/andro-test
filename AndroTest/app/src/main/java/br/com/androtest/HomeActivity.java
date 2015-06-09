@@ -26,8 +26,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import com.lp3.GrupoUsuarioApi;
-
 import com.lp3.Parametros;
 
 import com.lp3.Usuario;
@@ -37,13 +35,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import br.com.androtest.util.AdapterListView;
 import br.com.androtest.util.AndroidUtils;
 import com.lp3.Atividade;
+
+import br.com.androtest.util.InstanciaFactory;
+import br.com.androtest.util.InstanciaObjeto;
 import br.com.androtest.util.RestUrls;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -56,6 +55,7 @@ public class HomeActivity extends Activity {
     Viagem viagemV;
     ArrayList<Atividade> listaAtividades = new ArrayList<Atividade>();
     private boolean responseServe = false;
+    String entityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,10 +129,6 @@ public class HomeActivity extends Activity {
                         try{
                             if(response.isNull("erro")){
                                 JSONArray arrayAtividades = response.getJSONArray("atividades");
-                                //transformar objeto em lista de atividades
-                                //http://www.leveluplunch.com/java/examples/convert-json-array-to-arraylist-of-objects-jackson/
-                                //http://stackoverflow.com/questions/26814673/android-jsonarray-to-arraylist
-                                ;
                                 Atividade atividade = null;
                                 JSONObject objAtividade;
                                 Parametros parametros;
@@ -205,7 +201,7 @@ public class HomeActivity extends Activity {
                                 viagemV.setCustoReal(Double.parseDouble(viagem.getString("custoReal")));
                                 viagemV.setHoraPartida(viagem.getString("horaPartida"));
                                 viagemV.setHoraChegada(viagem.getString("horaChegada"));
-                                goToUpDateViagem();
+                                goToUpDateViagem(viagemV);
                             }else{
                                 AndroidUtils.alertUser("Erro ao obter atividades: " + response.getString("erro"), currentActivity);
                             }
@@ -230,9 +226,15 @@ public class HomeActivity extends Activity {
 
     public void getEntityFromServer(Atividade atividade){
 
-        String entityName = getEntityNameFromAtividade(atividade); // TODO lowerCaseFirst(String.split(atividade.getInputParameters().get(0).getNome(),¨.¨).get(size-2)))
+        entityName = getEntityNameFromAtividade(atividade);
+        // TODO lowerCaseFirst(String.split(atividade.getInputParameters().get(0).getNome(),¨.¨).get(size-2)))----Feito
+        String string[]=entityName.split("\\.");//quebro a string de acordo com os pontos
+        entityName=string[string.length-1];//passo o penultimo para a entityName
+        entityName=entityName.toLowerCase();//converto para minuscula
 
         String url = RestUrls.host+entityName+"/"+atividade.getParametros().getEntityId();
+        System.out.println(url);
+
         final Activity currentActivity = this;
         System.out.println("Url: "+url);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -245,21 +247,35 @@ public class HomeActivity extends Activity {
 
                         try{
                             if(response.isNull("erro")){
-                                viagemV = new Viagem();
-                                JSONObject viagem = response.getJSONObject("Viagem");
-                                viagemV.setId(Integer.parseInt(viagem.getString("id")));
-                                viagemV.setQtdePessoas(Integer.parseInt(viagem.getString("qtdePessoas")));
-                                viagemV.setTitulo(viagem.getString("titulo"));
-                                viagemV.setStatus(viagem.getString("status"));
-                                viagemV.setCidadeOrigem(viagem.getString("cidadeOrigem"));
-                                viagemV.setCidadeDestino(viagem.getString("cidadeDestino"));
-                                viagemV.setDataPartida(viagem.getString("dataPartida"));
-                                viagemV.setDataChegada(viagem.getString("dataChegada"));
-                                viagemV.setCustoOrcado(Double.parseDouble(viagem.getString("custoOrcado")));
-                                viagemV.setCustoReal(Double.parseDouble(viagem.getString("custoReal")));
-                                viagemV.setHoraPartida(viagem.getString("horaPartida"));
-                                viagemV.setHoraChegada(viagem.getString("horaChegada"));
-                                goToUpDateViagem();
+                                //TODO tornar mais generalizável ACHO QUE AGORA TA
+                                JSONObject resposta = response.getJSONObject("Viagem");
+                                //InstanciaObjeto objeto= InstanciaFactory.getInstancia(entityName);
+                                //objeto.createObj(resposta,); //talvez isso de errado
+
+                                switch (entityName){
+                                    case "viagem":{
+                                        Viagem viagem=new Viagem().createObj(resposta);
+                                        //viagem=viagem.createObj(resposta);
+                                        viagem.print();
+                                        goToUpDateViagem(viagem);
+                                        break;
+                                    }
+                                    case "usuario":{
+                                        break;
+                                    }
+                                    case "atividade":{
+
+                                        break;
+                                    }
+                                    case "saude":{
+
+                                        break;
+                                    }
+                                    default:{
+                                        break;
+                                    }
+                                }
+
                             }else{
                                 AndroidUtils.alertUser("Erro ao obter atividades: " + response.getString("erro"), currentActivity);
                             }
@@ -267,7 +283,7 @@ public class HomeActivity extends Activity {
                             e.printStackTrace();
                         }
                     }
-                }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -280,6 +296,10 @@ public class HomeActivity extends Activity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsObjRequest);
         requestQueue.start();
+    }
+
+    private String getEntityNameFromAtividade(Atividade atividade) {
+        return atividade.getParametros().getEntityNome();
     }
 
     @Override
@@ -304,12 +324,10 @@ public class HomeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void goToUpDateViagem(){
-
-        System.out.println("Na go to up date viagem");
+    public void goToUpDateViagem(Viagem viagem){
 
         Intent intent= new Intent(this,ViagemActivity.class);
-        intent.putExtra("viagemParcelable",viagemV);
+        intent.putExtra("viagemParcelable",viagem);
         intent.putExtra("usuarioParcelable",usuario);
         startActivity(intent);
     }
@@ -328,8 +346,7 @@ public class HomeActivity extends Activity {
                 System.out.println("Atividade nome: " + atividade.getNome() + " Nome: " + atividade.getParametros().getEntityNome()
                         + "ID: " + atividade.getParametros().getEntityId());
 
-                // TODO getEntityFromServer(atividade)
-                getViagemFromServer(atividade.getParametros().getEntityId());
+                getEntityFromServer(atividade);
 
             }
         });

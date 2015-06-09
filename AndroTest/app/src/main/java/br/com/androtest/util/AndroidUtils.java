@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import br.com.androtest.R;
 
 /**
@@ -37,4 +40,6 @@ public class AndroidUtils {
         });
         popupBuilder.show();
     }
+
+
 }

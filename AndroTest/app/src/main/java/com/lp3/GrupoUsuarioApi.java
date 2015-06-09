@@ -58,4 +58,10 @@ public class GrupoUsuarioApi implements Parcelable{
         dest.writeString(idBpms);
         dest.writeString(nome);
     }
+
+    /**
+     * Created by Danilo on 09/06/2015.
+     */
+    public static class InstanciaFactory {
+    }
 }
