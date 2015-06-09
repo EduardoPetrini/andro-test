@@ -9,6 +9,7 @@ public class RestUrls {
     public final static String viagemCadastrar = "viagem/cadastrar";
     public final static String getUsuarioById = "usuario/";
     public final static String getViagemById = "viagem/";
+    public final static String orcar = "viagem/orcar";
     public final static String getAtividades = "usuario/atividades/";
     public final static String login = "login";
 

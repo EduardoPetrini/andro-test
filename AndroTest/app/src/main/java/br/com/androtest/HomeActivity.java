@@ -1,11 +1,18 @@
 package br.com.androtest;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -38,6 +45,7 @@ import br.com.androtest.util.AdapterListView;
 import br.com.androtest.util.AndroidUtils;
 import com.lp3.Atividade;
 import br.com.androtest.util.RestUrls;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 public class HomeActivity extends Activity {
@@ -52,10 +60,11 @@ public class HomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
-
         usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
-
 
         ImageButton addTarefa=(ImageButton)findViewById(R.id.buttonAddTarefa);
 
@@ -73,6 +82,33 @@ public class HomeActivity extends Activity {
         cargoUsuario.setText(usuario.grupoUsuario.getNome());
 
         solicitaAtividades();
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/comfortaa-regular.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
+
+        SpannableString s = new SpannableString("");
+        s.setSpan(new TypefaceSpan("fonts/comfortaa-bold.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Update the action bar title with the TypefaceSpan instance
+        ViewGroup actionBarLayout = (ViewGroup) this.getLayoutInflater().inflate(R.layout.activity_action_bar, null);
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle(s);
+        actionBar.setIcon(R.mipmap.ic_van);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(actionBarLayout,
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
+
+
+
     }
 
     public void solicitaAtividades(){
@@ -218,20 +254,6 @@ public class HomeActivity extends Activity {
 
         System.out.println("Na go to up date viagem");
 
-        viagemV=new Viagem();
-        viagemV.setId(11);
-        viagemV.setQtdePessoas(13);
-        viagemV.setStatus("status");
-        viagemV.setTitulo("Excursãooo");
-        viagemV.setCidadeOrigem("Lavras");
-        viagemV.setCidadeDestino("BH");
-        viagemV.setDataPartida("27/01/2015");
-        viagemV.setDataChegada("30/01/2015");
-        viagemV.setCustoOrcado(600);
-        viagemV.setCustoReal(600);
-        viagemV.setHoraPartida("12:00");
-        viagemV.setHoraChegada("12:00");
-
         Intent intent= new Intent(this,ViagemActivity.class);
         intent.putExtra("viagemParcelable",viagemV);
         intent.putExtra("usuarioParcelable",usuario);
@@ -251,7 +273,6 @@ public class HomeActivity extends Activity {
                 Object item = mainListView.getItemAtPosition(position);
                 System.out.println("Atividade nome: " + atividade.getNome() + " Nome: " + atividade.getParametros().getEntityNome()
                         + "ID: " + atividade.getParametros().getEntityId());
-
 
                 getViagemFromServer(atividade.getParametros().getEntityId());
 

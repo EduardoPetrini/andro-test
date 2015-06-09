@@ -228,4 +228,74 @@ public class ViagemActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void aceitar(View view){
+    }
+
+    public void rejeitar(View view){
+
+    }
+
+    public void iniciarViagem(View view){
+
+    }
+    public void terminarViagem(View view){
+
+    }
+    public void enviarTransportador(View view) {
+
+        EditText custoOrcado = (EditText)findViewById(R.id.custoOrcado);
+
+        JSONObject dataObject = new JSONObject();
+        try {
+            dataObject.put("id", viagem.getId());
+            dataObject.put("custoOrcado", custoOrcado.getText());
+            updateOrcamentoViagemToServer(dataObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void updateOrcamentoViagemToServer(JSONObject dataObject){
+        String url = RestUrls.host+RestUrls.orcar;
+
+        final Activity currentActivity = this;
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (url, dataObject, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        System.out.println(response);
+
+                        try{
+                            if(response.isNull("erro")) {
+
+                                AndroidUtils.alertUser("Viagem atualizada com sucesso!", currentActivity);
+
+                            }else{
+                                AndroidUtils.alertUser("Erro ao atualizar viagem: "+response.getString("erro"), currentActivity);
+                            }
+
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub, print error message
+                        System.out.println("Erro ao atualizar viagem: "+error.getMessage());
+                        AndroidUtils.alertUser("Erro ao atualizar viagem: " + error.getMessage(), currentActivity);
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
+        requestQueue.start();
+
+    }
+
 }
