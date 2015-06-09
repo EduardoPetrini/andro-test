@@ -228,6 +228,60 @@ public class HomeActivity extends Activity {
         requestQueue.start();
     }
 
+    public void getEntityFromServer(Atividade atividade){
+
+        String entityName = getEntityNameFromAtividade(atividade); // TODO lowerCaseFirst(String.split(atividade.getInputParameters().get(0).getNome(),¨.¨).get(size-2)))
+
+        String url = RestUrls.host+entityName+"/"+atividade.getParametros().getEntityId();
+        final Activity currentActivity = this;
+        System.out.println("Url: "+url);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (url, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        System.out.println("Obj response JSON viagem: "+response);
+
+                        try{
+                            if(response.isNull("erro")){
+                                viagemV = new Viagem();
+                                JSONObject viagem = response.getJSONObject("Viagem");
+                                viagemV.setId(Integer.parseInt(viagem.getString("id")));
+                                viagemV.setQtdePessoas(Integer.parseInt(viagem.getString("qtdePessoas")));
+                                viagemV.setTitulo(viagem.getString("titulo"));
+                                viagemV.setStatus(viagem.getString("status"));
+                                viagemV.setCidadeOrigem(viagem.getString("cidadeOrigem"));
+                                viagemV.setCidadeDestino(viagem.getString("cidadeDestino"));
+                                viagemV.setDataPartida(viagem.getString("dataPartida"));
+                                viagemV.setDataChegada(viagem.getString("dataChegada"));
+                                viagemV.setCustoOrcado(Double.parseDouble(viagem.getString("custoOrcado")));
+                                viagemV.setCustoReal(Double.parseDouble(viagem.getString("custoReal")));
+                                viagemV.setHoraPartida(viagem.getString("horaPartida"));
+                                viagemV.setHoraChegada(viagem.getString("horaChegada"));
+                                goToUpDateViagem();
+                            }else{
+                                AndroidUtils.alertUser("Erro ao obter atividades: " + response.getString("erro"), currentActivity);
+                            }
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub, print error message
+                        System.out.println("Erro ao obter atividades: " + error.getMessage());
+                        AndroidUtils.alertUser("Erro ao obter atividades: "+error.getMessage(), currentActivity);
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
+        requestQueue.start();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -274,6 +328,7 @@ public class HomeActivity extends Activity {
                 System.out.println("Atividade nome: " + atividade.getNome() + " Nome: " + atividade.getParametros().getEntityNome()
                         + "ID: " + atividade.getParametros().getEntityId());
 
+                // TODO getEntityFromServer(atividade)
                 getViagemFromServer(atividade.getParametros().getEntityId());
 
             }
