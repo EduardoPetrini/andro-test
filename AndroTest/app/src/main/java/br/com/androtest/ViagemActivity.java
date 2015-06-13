@@ -33,11 +33,11 @@ import br.com.androtest.util.AndroidUtils;
 import br.com.androtest.util.RestUrls;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-
 public class ViagemActivity extends Activity {
 
     private Usuario usuario;
     private Viagem viagem;
+    private String idAtividade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class ViagemActivity extends Activity {
 
         usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
         viagem = getIntent().getExtras().getParcelable("viagemParcelable");
+        idAtividade=getIntent().getStringExtra("idAtividade");
 
         Spinner spinner= (Spinner)findViewById(R.id.spinnerMotorista);
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.motoristas,android.R.layout.simple_spinner_item);
@@ -86,8 +87,7 @@ public class ViagemActivity extends Activity {
             bottunCriar.setVisibility(View.INVISIBLE);
         }
 
-        System.out.println("Usuário não é null");
-        LinearLayout layoutBAutorizador=(LinearLayout)findViewById(R.id.layoutBotoesAutorizadr);
+        LinearLayout layoutBAutorizador=(LinearLayout)findViewById(R.id.layoutBotoesAutorizador);
         LinearLayout layoutBMotorista=(LinearLayout)findViewById(R.id.layoutBotoesMotorista);
         Button BotaoSolicitante=(Button)findViewById(R.id.buttonCriar);
         Button BotaoTransportador=(Button)findViewById(R.id.buttonEnviarTransportador);
@@ -96,16 +96,17 @@ public class ViagemActivity extends Activity {
         layoutBMotorista.setVisibility(View.INVISIBLE);
         BotaoSolicitante.setVisibility(View.INVISIBLE);
         BotaoTransportador.setVisibility(View.INVISIBLE);
+        //Verificar se os Ids estão iguais aos da API
 
         switch (usuario.grupoUsuario.idBpms.toString()){
             case "1":
                 layoutBAutorizador.setVisibility(View.VISIBLE);
                 break;
             case "2":
-                BotaoSolicitante.setVisibility(View.VISIBLE);
+                layoutBMotorista.setVisibility(View.VISIBLE);
                 break;
             case "3":
-                layoutBMotorista.setVisibility(View.VISIBLE);
+                BotaoSolicitante.setVisibility(View.VISIBLE);
                 break;
             case "4":
                 BotaoTransportador.setVisibility(View.VISIBLE);
@@ -120,7 +121,7 @@ public class ViagemActivity extends Activity {
         EditText dataPartida = (EditText)findViewById(R.id.dataPartida);
         dataPartida.setText(viagem.getDataPartida());
         EditText horaPartida = (EditText)findViewById(R.id.horaPartida);
-        horaPartida.setText(viagem.getHoraPartida());// Inserir campo hora
+        horaPartida.setText(viagem.getHoraPartida());
         EditText dataChegada = (EditText)findViewById(R.id.dataChegada);
         dataChegada.setText(viagem.getDataChegada());
         EditText horaChegada = (EditText)findViewById(R.id.horaChegada);
@@ -147,17 +148,28 @@ public class ViagemActivity extends Activity {
         EditText origem = (EditText)findViewById(R.id.origem);
         EditText destino = (EditText)findViewById(R.id.destino);
         EditText qtdePessoas = (EditText)findViewById(R.id.qtdePessoas);
+        EditText custoOrcado= (EditText)findViewById(R.id.custoOrcado);
+        EditText custoReal= (EditText)findViewById(R.id.custoReal);
+        Spinner motorista=(Spinner)findViewById(R.id.spinnerMotorista);
 
-        String strDataPartida = dataPartida.getText().toString()+" "+horaPartida.getText().toString();
-        String strDataChegada = dataPartida.getText().toString()+" "+horaPartida.getText().toString();
         try {
             JSONObject dataObject = new JSONObject();
+
             dataObject.put("nome", titulo.getText().toString());
-            dataObject.put("dataPartida", strDataPartida);
-            dataObject.put("dataChegada", strDataChegada);
+            dataObject.put("dataPartida", dataPartida.getText().toString());
+            dataObject.put("horaPartida", horaPartida.getText().toString());
+            dataObject.put("dataChegada", dataChegada.getText().toString());
+            dataObject.put("horaPartida", horaChegada.getText().toString());
             dataObject.put("origem", origem.getText().toString());
             dataObject.put("destino", destino.getText().toString());
             dataObject.put("qtdePessoas", qtdePessoas.getText().toString());
+            dataObject.put("custoOrcado", custoOrcado.getText().toString());
+            dataObject.put("custoReal", custoReal.getText().toString());
+
+            if(!motorista.getSelectedItem().toString().equalsIgnoreCase("Selecione o motorista"))
+                dataObject.put("motorista", motorista.getSelectedItem().toString());
+
+            dataObject.put("idAtividade",idAtividade);
             dataObject.put("usuarioId", usuario.getId());
 
             sendViagemToServer(dataObject);
@@ -229,37 +241,93 @@ public class ViagemActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void aceitar(View view){
-    }
+    public void clickButton(View view) throws JSONException {
 
-    public void rejeitar(View view){
+        boolean flag;
 
-    }
-
-    public void iniciarViagem(View view){
-
-    }
-    public void terminarViagem(View view){
-
-    }
-    public void enviarTransportador(View view) {
-
-        EditText custoOrcado = (EditText)findViewById(R.id.custoOrcado);
-
-        JSONObject dataObject = new JSONObject();
-        try {
-            dataObject.put("id", viagem.getId());
-            dataObject.put("custoOrcado", custoOrcado.getText());
-            updateOrcamentoViagemToServer(dataObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        switch (view.getId()){
+            case R.id.aceitar:{
+                flag=true;
+                constructObjWithFlag(flag);
+                break;
+            }
+            case R.id.rejeitar:{
+                flag=false;
+                constructObjWithFlag(flag);
+                break;
+            }
+            case R.id.iniciar:{
+                flag=true;
+                constructObjWithFlag(flag);
+                break;
+            }
+            case R.id.terminar:{
+                flag=false;
+                constructObjWithFlag(flag);
+                break;
+            }
+            case R.id.buttonEnviarTransportador:{
+                System.out.println("Botão do transportador clicado");
+                try {
+                    constructObjCusto();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
         }
 
     }
 
-    public void updateOrcamentoViagemToServer(JSONObject dataObject){
-        String url = RestUrls.host+RestUrls.orcar;
+    public void constructObjWithFlag(boolean flag){
 
+        JSONObject dataObject = new JSONObject();
+        try {
+            dataObject.put("idViagem", viagem.getId());
+            dataObject.put("idAtividade", idAtividade);
+            dataObject.put("aceitar", flag);
+            updateViagem(dataObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void constructObjCusto() throws JSONException {
+
+        EditText custoOrcado= (EditText)findViewById(R.id.custoOrcado);
+        EditText custoReal= (EditText)findViewById(R.id.custoReal);
+        Spinner motorista=(Spinner)findViewById(R.id.spinnerCargo);
+        JSONObject dataObject = new JSONObject();
+
+        //TODO verificar compatibilidade dos status usados aqui com os recebidos da API
+        if(viagem.getStatus().toString().equalsIgnoreCase("Orcar")){
+            dataObject.put("idViagem", viagem.getId());
+            dataObject.put("idAtividade", idAtividade);
+            dataObject.put("custoOrcado",custoOrcado);
+            System.out.println("Status em Orcar");
+        }
+        //TODO verificar compatibilidade dos status usados aqui com os recebidos da API
+        else if(viagem.getStatus().toString().equalsIgnoreCase("Selecionar Motorista")){
+            dataObject.put("idViagem", viagem.getId());
+            dataObject.put("idAtividade", idAtividade);
+            dataObject.put("motorista",motorista);
+            System.out.println("Status em Selecionar Motorista");
+        }
+        else if(viagem.getStatus().toString().equalsIgnoreCase("Custo Real")){
+            dataObject.put("idViagem", viagem.getId());
+            dataObject.put("idAtividade", idAtividade);
+            dataObject.put("custoReal",custoReal);
+            System.out.println("Status em Custo Real");
+        }
+
+        updateViagem(dataObject);
+
+    }
+
+    public void updateViagem(JSONObject dataObject){
+
+        String url = RestUrls.host+RestUrls.viagemUpdate;
+        System.out.println("Objeto enviado para o webservice");
         final Activity currentActivity = this;
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (url, dataObject, new Response.Listener<JSONObject>() {

@@ -10,7 +10,7 @@ package com.lp3;
  */
 public class UsuarioApi{
     private int id;
-    private int idAplicacao;
+    private int idApp;
     private String nome;
     public GrupoUsuarioApi grupoUsuario;
 
@@ -22,12 +22,12 @@ public class UsuarioApi{
         this.id = id;
     }
 
-    public int getIdAplicacao() {
-        return idAplicacao;
+    public int getIdApp() {
+        return idApp;
     }
 
-    public void setIdAplicacao(int idAplicacao) {
-        this.idAplicacao = idAplicacao;
+    public void setIdApp(int idAplicacao) {
+        this.idApp= idAplicacao;
     }
 
     public String getNome() {

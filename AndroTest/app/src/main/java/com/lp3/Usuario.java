@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 public class Usuario extends UsuarioApi implements Parcelable {
     private int id;
-    private int idApi;
     public String nome;
     private String email;
     private String senha;

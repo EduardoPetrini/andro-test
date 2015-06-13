@@ -235,7 +235,7 @@
         android:textAppearance="@style/comforttaFont"/>
 
     <LinearLayout
-        android:id="@+id/layoutBotoesAutorizadr"
+        android:id="@+id/layoutBotoesAutorizador"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -249,7 +249,7 @@
             android:text="@string/button_aceitar"
             android:layout_gravity="left"
             android:background="@color/blue_default"
-            android:onClick="aceitar"
+            android:onClick="clickButton"
             android:layout_marginRight="10dp"
             android:textAppearance="@style/comforttaFont"
             />
@@ -261,7 +261,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_rejeitar"
             android:background="@color/blue_default"
-            android:onClick="rejeitar"
+            android:onClick="clickButton"
             android:layout_marginLeft="10dp"
             android:textAppearance="@style/comforttaFont"/>
 
@@ -282,7 +282,7 @@
             android:text="@string/button_iniciar_viagem"
             android:layout_gravity="left"
             android:background="@color/blue_default"
-            android:onClick="iniciarViagem"
+            android:onClick="clickButton"
             android:layout_marginRight="10dp"
             android:textAppearance="@style/comforttaFont"/>
 
@@ -294,7 +294,7 @@
             android:text="@string/button_terminar_viagem"
             android:background="@color/blue_default"
             android:layout_gravity="right"
-            android:onClick="terminarViagem"
+            android:onClick="clickButton"
             android:layout_marginLeft="10dp"
             android:textAppearance="@style/comforttaFont"/>
 
@@ -308,7 +308,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/blue_default"
         android:textColor="@color/White_default"
-        android:onClick="enviarTransportador"
+        android:onClick="clickButton"
         android:gravity="center_horizontal"
         android:textAppearance="@style/comforttaFont"/>
 

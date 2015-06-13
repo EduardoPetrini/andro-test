@@ -15,6 +15,7 @@ import android.os.Parcelable;
 public class GrupoUsuarioApi implements Parcelable{
     private String id;
     public String idBpms;
+    public String idAPP;
     private String nome;
 
     public String getId() {
@@ -41,6 +42,14 @@ public class GrupoUsuarioApi implements Parcelable{
         this.nome = nome;
     }
 
+    public String getIdAPP() {
+        return idAPP;
+    }
+
+    public void setIdAPP(String idAPP) {
+        this.idAPP = idAPP;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -50,6 +59,7 @@ public class GrupoUsuarioApi implements Parcelable{
         id = in.readString();
         idBpms = in.readString();
         nome = in.readString();
+        idAPP = in.readString();
     }
 
     @Override
@@ -57,11 +67,6 @@ public class GrupoUsuarioApi implements Parcelable{
         dest.writeString(id);
         dest.writeString(idBpms);
         dest.writeString(nome);
-    }
-
-    /**
-     * Created by Danilo on 09/06/2015.
-     */
-    public static class InstanciaFactory {
+        dest.writeString(idAPP);
     }
 }

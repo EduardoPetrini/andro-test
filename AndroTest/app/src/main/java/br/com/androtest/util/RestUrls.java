@@ -4,7 +4,7 @@ package br.com.androtest.util;
  * Created by eduardo on 31/05/15.
  */
 public class RestUrls {
-    public final static String host = "http://192.168.0.103:9000/";
+    public final static String host = "http://192.168.0.3:9000/";
     //public final static String host = "http://177.105.51.245:9000/";
     //public final static String host = "http://177.105.60.240:9000/";
     public final static String usuarioCadastrar = "usuario/cadastrar";
@@ -14,5 +14,6 @@ public class RestUrls {
     public final static String orcar = "viagem/orcar";
     public final static String getAtividades = "usuario/atividades/";
     public final static String login = "login";
+    public final static String viagemUpdate = "viagem/update";
 
 }

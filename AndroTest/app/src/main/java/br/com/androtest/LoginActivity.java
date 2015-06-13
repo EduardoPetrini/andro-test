@@ -87,23 +87,9 @@ public class LoginActivity extends Activity {
 
     public void entrar(View view){
 
-        //pega as informacoes da tela
         System.out.println("Logando no sistema...");
         EditText emailField = (EditText)findViewById(R.id.usuario_email);
         EditText senhaField = (EditText)findViewById(R.id.usuario_password);
-
-//        usuario = new Usuario();
-//        usuario.setNome("Danilo");
-//        usuario.setId(13);
-//        usuario.setEmail("danilo@email.com");
-//        GrupoUsuarioApi gp = new GrupoUsuarioApi();
-//        gp.setIdBpms("3");
-//        gp.setId("12");
-//        gp.setNome("grupoUsuario.nome");
-//
-//        usuario.setGrupoUsuario(gp);
-//
-//        goToHome();
 
         if(validateFields(emailField,senhaField)) {
 

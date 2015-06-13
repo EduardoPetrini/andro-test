@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cargoUsuario"
-        android:layout_above="@+id/buttonAddTarefa"
+        android:layout_above="@+id/buttonAddAtividade"
         android:layout_marginTop="-4dp"
         android:layout_marginBottom="-4dp"
         android:clickable="true">
@@ -63,7 +63,7 @@
     </ListView>
 
     <ImageButton
-        android:id="@+id/buttonAddTarefa"
+        android:id="@+id/buttonAddAtividade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -72,7 +72,7 @@
         android:background="@mipmap/ic_add"
         android:maxHeight="72dp"
         android:maxWidth="72dp"
-        android:onClick="abrirTarefa"
+        android:onClick="addAtividade"
         android:clickable="true"/>
 
 </RelativeLayout>

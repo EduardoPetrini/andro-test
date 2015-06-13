@@ -122,7 +122,6 @@ public class CadastroActivity extends Activity {
         EditText confSenha = (EditText) findViewById(R.id.inputConfSenha);
         Spinner spinner= (Spinner)findViewById(R.id.spinnerCargo);
 
-        //usuario.setCargo(spinner.getSelectedItem().toString());
         GrupoUsuarioApi gp = new GrupoUsuarioApi();
         if(spinner.getSelectedItem().toString().equalsIgnoreCase("1")){
             gp.idBpms="1";
@@ -160,7 +159,6 @@ public class CadastroActivity extends Activity {
                 e.printStackTrace();
             }
         }
-
 
     }
 

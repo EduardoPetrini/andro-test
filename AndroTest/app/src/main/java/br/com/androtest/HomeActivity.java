@@ -52,7 +52,6 @@ public class HomeActivity extends Activity {
     private ListView mainListView;
     private ArrayAdapter<Atividade> adapter;
     Usuario usuario;
-    Viagem viagemV;
     ArrayList<Atividade> listaAtividades = new ArrayList<Atividade>();
     private boolean responseServe = false;
     String entityName;
@@ -66,18 +65,18 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         usuario = getIntent().getExtras().getParcelable("usuarioParcelable");
 
-        ImageButton addTarefa=(ImageButton)findViewById(R.id.buttonAddTarefa);
+        ImageButton addAtividade=(ImageButton)findViewById(R.id.buttonAddAtividade);
 
         if (!usuario.grupoUsuario.idBpms.equalsIgnoreCase("3")) {
-            addTarefa.setVisibility(View.INVISIBLE);
+            addAtividade.setVisibility(View.INVISIBLE);
         }
 
-        TextView nomeUsuario;//= new TextView(this);
+        TextView nomeUsuario;
         nomeUsuario=(TextView)findViewById(R.id.nomeUsuario);
         nomeUsuario.setText(usuario.getNome());
         System.out.print(usuario.getNome());
 
-        TextView cargoUsuario;//= new TextView(this);
+        TextView cargoUsuario;
         cargoUsuario=(TextView)findViewById(R.id.cargoUsuario);
         cargoUsuario.setText(usuario.grupoUsuario.getNome());
 
@@ -107,8 +106,6 @@ public class HomeActivity extends Activity {
                 )
         );
 
-
-
     }
 
     public void solicitaAtividades(){
@@ -127,7 +124,7 @@ public class HomeActivity extends Activity {
                         System.out.println("Na home...\n"+response);
 
                         try{
-                            if(response.isNull("erro")){
+                            if(response.isNull("erro")|| usuario.getGrupoUsuario().toString()!="3"){
                                 JSONArray arrayAtividades = response.getJSONArray("atividades");
                                 Atividade atividade = null;
                                 JSONObject objAtividade;
@@ -146,7 +143,9 @@ public class HomeActivity extends Activity {
 
                                     listaAtividades.add(atividade);
                                 }
+
                                 buildListView();
+
                                 responseServe = true;
                             }else{
                                 AndroidUtils.alertUser("Erro ao obter lista de atividades: " + response.getString("erro"), currentActivity);
@@ -173,67 +172,14 @@ public class HomeActivity extends Activity {
         requestQueue.start();
     }
 
-    public void getViagemFromServer(String entityId){
-        String url = RestUrls.host+RestUrls.getViagemById+entityId;
-        final Activity currentActivity = this;
-        System.out.println("Url: "+url);
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (url, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        System.out.println("Obj response JSON viagem: "+response);
-
-                        try{
-                            if(response.isNull("erro")){
-                                viagemV = new Viagem();
-                                JSONObject viagem = response.getJSONObject("Viagem");
-                                viagemV.setId(Integer.parseInt(viagem.getString("id")));
-                                viagemV.setQtdePessoas(Integer.parseInt(viagem.getString("qtdePessoas")));
-                                viagemV.setTitulo(viagem.getString("titulo"));
-                                viagemV.setStatus(viagem.getString("status"));
-                                viagemV.setCidadeOrigem(viagem.getString("cidadeOrigem"));
-                                viagemV.setCidadeDestino(viagem.getString("cidadeDestino"));
-                                viagemV.setDataPartida(viagem.getString("dataPartida"));
-                                viagemV.setDataChegada(viagem.getString("dataChegada"));
-                                viagemV.setCustoOrcado(Double.parseDouble(viagem.getString("custoOrcado")));
-                                viagemV.setCustoReal(Double.parseDouble(viagem.getString("custoReal")));
-                                viagemV.setHoraPartida(viagem.getString("horaPartida"));
-                                viagemV.setHoraChegada(viagem.getString("horaChegada"));
-                                goToUpDateViagem(viagemV);
-                            }else{
-                                AndroidUtils.alertUser("Erro ao obter atividades: " + response.getString("erro"), currentActivity);
-                            }
-                        }catch(JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub, print error message
-                        System.out.println("Erro ao obter atividades: " + error.getMessage());
-                        AndroidUtils.alertUser("Erro ao obter atividades: "+error.getMessage(), currentActivity);
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsObjRequest);
-        requestQueue.start();
-    }
-
-    public void getEntityFromServer(Atividade atividade){
+    public void getEntityFromServer(final Atividade atividade){
 
         entityName = getEntityNameFromAtividade(atividade);
-        // TODO lowerCaseFirst(String.split(atividade.getInputParameters().get(0).getNome(),¨.¨).get(size-2)))----Feito
-        String string[]=entityName.split("\\.");//quebro a string de acordo com os pontos
-        entityName=string[string.length-1];//passo o penultimo para a entityName
-        entityName=entityName.toLowerCase();//converto para minuscula
+        String string[]=entityName.split("\\.");
+        entityName=string[string.length-1];
+        entityName=entityName.toLowerCase();
 
         String url = RestUrls.host+entityName+"/"+atividade.getParametros().getEntityId();
-        System.out.println(url);
 
         final Activity currentActivity = this;
         System.out.println("Url: "+url);
@@ -247,17 +193,16 @@ public class HomeActivity extends Activity {
 
                         try{
                             if(response.isNull("erro")){
-                                //TODO tornar mais generalizável ACHO QUE AGORA TA
                                 JSONObject resposta = response.getJSONObject("Viagem");
                                 //InstanciaObjeto objeto= InstanciaFactory.getInstancia(entityName);
-                                //objeto.createObj(resposta,); //talvez isso de errado
+                                //objeto.createObj(resposta,);
 
                                 switch (entityName){
                                     case "viagem":{
                                         Viagem viagem=new Viagem().createObj(resposta);
                                         //viagem=viagem.createObj(resposta);
                                         viagem.print();
-                                        goToUpDateViagem(viagem);
+                                        goToUpDateViagem(viagem, atividade);
                                         break;
                                     }
                                     case "usuario":{
@@ -324,11 +269,13 @@ public class HomeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void goToUpDateViagem(Viagem viagem){
+    public void goToUpDateViagem(Viagem viagem, Atividade atividade){
 
         Intent intent= new Intent(this,ViagemActivity.class);
         intent.putExtra("viagemParcelable",viagem);
         intent.putExtra("usuarioParcelable",usuario);
+        intent.putExtra("idAtividade", Integer.toString(atividade.getId()));
+        intent.putExtra("idAtividade", Integer.toString(atividade.getId()));
         startActivity(intent);
     }
 
@@ -342,7 +289,6 @@ public class HomeActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Atividade atividade = (Atividade) adapter.getItem(position);
-                Object item = mainListView.getItemAtPosition(position);
                 System.out.println("Atividade nome: " + atividade.getNome() + " Nome: " + atividade.getParametros().getEntityNome()
                         + "ID: " + atividade.getParametros().getEntityId());
 
@@ -350,5 +296,12 @@ public class HomeActivity extends Activity {
 
             }
         });
+    }
+
+    public void addAtividade(View view){
+
+        Intent intent= new Intent(this,ViagemActivity.class);
+        intent.putExtra("usuarioParcelable",usuario);
+        startActivity(intent);
     }
 }
